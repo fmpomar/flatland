@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="192" height="96"/>
+  <terraintypes>
+   <terrain name="Main" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain=",,,0"/>
+  <tile id="1" terrain=",,0,0"/>
+  <tile id="2" terrain=",,0,"/>
+  <tile id="3" terrain=",0,0,0"/>
+  <tile id="5" terrain="0,,0,0"/>
+  <tile id="6" terrain=",0,,0"/>
+  <tile id="7" terrain="0,0,0,0"/>
+  <tile id="8" terrain="0,,0,"/>
+  <tile id="12" terrain=",0,,"/>
+  <tile id="13" terrain="0,0,,"/>
+  <tile id="14" terrain="0,,,"/>
+  <tile id="15" terrain="0,0,,0"/>
+  <tile id="17" terrain="0,0,0,"/>
+ </tileset>
+ <tileset firstgid="19" name="meta_tiles" tilewidth="32" tileheight="32" spacing="1" margin="1">
+  <image source="meta_tiles.png" width="67" height="34"/>
+  <tile id="0">
+   <properties>
+    <property name="Collidable" value="True"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Background" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmttuwjAMhrtRwRBiTLz/w9JeRLIsOz6ndPTCNzQHf3Xzx3G4TdN0+zD7Wuw7wU4b+z4v9pNg50EsFb5LLFysI7yXgH/PxX4Z+0Ntr4o5YZuRHL1574ilkmONb+Rbkua9g/g8iN8b55NoY1kT0fUQ+Q5gXKzjZPkP129Ek2fDOFADqvRohMGYbe1LBce6trA2Wq2nu1h7PW05vYPtVm3AuhF5R5Kme9py/dtveH/FWr8XjsYCtcDDYvWtl3vOxLgaDuyPZ0+0cmhzB4mDe99nB8OWHN518G4c2SxWDphv9XRXw4Gfj+TI0quDgzbpzLoXDsm/ag643iw5ENWnF5NqDu9cXDw5lr1xcCzvzsHlyZilKr/K4ujFhauLZO/nmRxUXKo4MjVe4sG1m0yOTI23miW/gvYg+ls4onUczdqNrD8tR6UdHLoxNN8srsN6zFq7tXJYxsvWgYPj/3JQOc8JPYN18ZF3fbiGw3FwNStuP4V7TAWPdK9BcWAGWLdu7/1CPKvY+7X3MtLZttWtuXwI5hSYNYNBWwOUzrZUPoM5KP5oTKy1WM18eEyOA9bxIhwV9WRqrcDvDPeP6rD3nljSXYqh52+Uw5vTaXUXMlD+Yl3xcETu7Ln5qPpN715Yuy9VMFg4tOb9/0H0jMBxaM+ZGTl4ZD487wvyT1rR
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="50" height="50">
+  <object name="SpawnPoint" x="11" y="394" width="31" height="32"/>
+ </objectgroup>
+ <layer name="Meta" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztVUkKxDAMyx/m/38d5lAoxovkJaFMDTk0jWUpXrLW/9mnce22ifi79Oy4O4k9kbuqL8pJ6pjgMuGr5SDyy3KZzqWVH7mXrauufujyP8Vfw6vMZHZ+n5jlXfZk7nfzZkNHfTO1kDnr6eh6f5B5VTmb0ZHRclrHtV/VwnJj5xE7o3bqYHAtHd09f1JH5xw+pQONj9rp/jilgz376uAsqvmn6Iiwdr/n1j7ak94893hEZ6v+kclzlpan6bj2NH0VHjt0WLyjN7jz/ZCx0bOeb4Q38Z4jcdF4UQ7kWRSX9a/okDGQukLxND7TOlBsdq5XdHQvhAPCjdExaa8ODIOt144am9DB4O3KnYxrfWfxXh21uNa3/If0w1r5OmfN6ikrtsXLu/9K30YWYXt8tG8kD5060Lvx7tzC8eat/F8xBieqD62OvH0PlzH2LpCzUT6ifdYy+UTqzqszqzeyOrredw9T4z+ho9PP03D38+ZYhsuEDi1G9B5GuB6Pak8x+wjeRJ9m/bX7R1eWR3X97AtyNC1H
+  </data>
+ </layer>
+</map>

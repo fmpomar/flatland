@@ -65,7 +65,12 @@
 -(void) initPhysics {
     _space = cpSpaceNew();
     cpSpaceSetDamping(_space, 0.05f);
-	[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];}
+	[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];
+}
+
+-(void) setupRandomObstacles {
+    
+}
 
 -(void) setupPlayerAtPosition:(CGPoint)position
 {
@@ -120,7 +125,7 @@
         self.touchEnabled = YES;
         [self initPhysics];
         
-        self.tileMap = [FLTiledMap tiledMapWithTMXFile:@"TileMap.tmx" andSpace: _space];
+        self.tileMap = [FLTiledMap tiledMapWithTMXFile:@"2d.tmx" andSpace: _space];
         
         [self addChild:_tileMap z:-1];
         [self setupPlayerAtPosition:[_tileMap playerSpawnPoint]];

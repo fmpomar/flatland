@@ -27,10 +27,13 @@
     return self;
 }
 
+
 -(CGPoint) playerSpawnPoint {
     CCTMXObjectGroup *objectGroup = [self objectGroupNamed:@"Objects"];
     NSAssert(objectGroup != nil, @"tile map has no objects object layer");
     NSDictionary *spawnPoint = [objectGroup objectNamed:@"SpawnPoint"];
+    
+    
     return ccp([spawnPoint[@"x"] integerValue],[spawnPoint[@"y"] integerValue]);
 }
 
