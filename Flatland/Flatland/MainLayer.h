@@ -10,7 +10,10 @@
 // MainLayer
 @interface MainLayer : CCLayer
 {
+    cpSpace *_space;
+    NSPointerArray* _blockShapes;
 }
+
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;

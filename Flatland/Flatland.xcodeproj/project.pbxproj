@@ -180,6 +180,7 @@
 		D5DF52DD18429BB600CE6370 /* TileMap.caf in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D518429BB600CE6370 /* TileMap.caf */; };
 		D5DF52DE18429BB600CE6370 /* TileMap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D618429BB600CE6370 /* TileMap.tmx */; };
 		D5DF52DF18429BB600CE6370 /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D718429BB600CE6370 /* tmw_desert_spacing.png */; };
+		D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52E1184306CC00CE6370 /* FLTiledMap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -532,6 +533,8 @@
 		D5DF52D518429BB600CE6370 /* TileMap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = TileMap.caf; sourceTree = "<group>"; };
 		D5DF52D618429BB600CE6370 /* TileMap.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TileMap.tmx; sourceTree = "<group>"; };
 		D5DF52D718429BB600CE6370 /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmw_desert_spacing.png; sourceTree = "<group>"; };
+		D5DF52E0184306CB00CE6370 /* FLTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTiledMap.h; sourceTree = "<group>"; };
+		D5DF52E1184306CC00CE6370 /* FLTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTiledMap.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,6 +598,8 @@
 				D5DF52CF18429BB600CE6370 /* TileGameResources */,
 				D5DF52CC18429AB000CE6370 /* MainLayer.h */,
 				D5DF52CD18429AB000CE6370 /* MainLayer.m */,
+				D5DF52E0184306CB00CE6370 /* FLTiledMap.h */,
+				D5DF52E1184306CC00CE6370 /* FLTiledMap.m */,
 				D5DF4FBA184294FF00CE6370 /* AppDelegate.h */,
 				D5DF4FBB184294FF00CE6370 /* AppDelegate.m */,
 				D5DF4FBD184294FF00CE6370 /* HelloWorldLayer.h */,
@@ -1334,6 +1339,7 @@
 				D5DF4FBF184294FF00CE6370 /* HelloWorldLayer.m in Sources */,
 				D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */,
 				D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */,
+				D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

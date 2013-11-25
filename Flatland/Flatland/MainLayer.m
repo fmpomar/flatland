@@ -1,6 +1,9 @@
 #import "MainLayer.h"
 #import "AppDelegate.h"
 #import "SimpleAudioEngine.h"
+#import "CCPhysicsSprite.h"
+
+#import "FLTiledMap.h"
 
 @implementation HudLayer
 {
@@ -29,11 +32,9 @@
 
 @interface MainLayer()
 
-@property (strong) CCTMXTiledMap *tileMap;
-@property (strong) CCTMXLayer *background;
-@property (strong) CCSprite *player;
+@property (strong) FLTiledMap *tileMap;
+@property (strong) CCPhysicsSprite *player;
 @property (strong) CCTMXLayer *meta;
-@property (strong) CCTMXLayer *foreground;
 @property (strong) HudLayer *hud;
 @property (assign) int numCollected;
 
@@ -61,12 +62,52 @@
 	return scene;
 }
 
+-(void) initPhysics {
+    _space = cpSpaceNew();
+    cpSpaceSetDamping(_space, 0.1f);
+	[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];}
+
+-(void) setupPlayerAtPosition:(CGPoint)position
+{
+	// physics body
+	/*int num = 4;
+	cpVect verts[] = {
+		cpv(-24,-54),
+		cpv(-24, 54),
+		cpv( 24, 54),
+		cpv( 24,-54),
+	};*/
+	
+    cpBody* body = cpBodyNew(1.0f, cpMomentForCircle(1.0f, 0.0f, 32.0f, CGPointZero));
+	cpBodySetPos( body, position );
+	cpSpaceAddBody(_space, body);
+	
+	/*cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
+	cpShapeSetElasticity( shape, 0.5f );
+	cpShapeSetFriction( shape, 0.5f );
+	cpSpaceAddShape(_space, shape);*/
+    
+    cpShape* shape = cpCircleShapeNew(body, 16.0f, CGPointZero);
+    cpShapeSetElasticity( shape, 0.5f );
+	cpShapeSetFriction( shape, 0.5f );
+    cpSpaceAddShape(_space, shape);
+	
+    CCPhysicsSprite* sprite = [CCPhysicsSprite spriteWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"Player.png"]];
+
+	[sprite setCPBody:body];
+	[sprite setPosition: position];
+    
+    _player = sprite;
+    [self addChild:_player];
+    [self setViewPointCenter:_player.position];
+    
+    
+}
+
 -(id) init
 {
     
 	if( (self=[super init]) ) {
-        
-        CGSize winSize = [CCDirector sharedDirector].winSize;
         
         // At top of init for MainLayer
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"pickup.caf"];
@@ -74,33 +115,17 @@
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
         
-        self.tileMap = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMap.tmx"];
-        self.background = [_tileMap layerNamed:@"Background"];
-        self.foreground = [_tileMap layerNamed:@"Foreground"];
         
-        self.meta = [_tileMap layerNamed:@"Meta"];
-        _meta.visible = NO;
-        
-        CCTMXObjectGroup *objectGroup = [_tileMap objectGroupNamed:@"Objects"];
-        NSAssert(objectGroup != nil, @"tile map has no objects object layer");
-        
-        NSDictionary *spawnPoint = [objectGroup objectNamed:@"SpawnPoint"];
-        int x = [spawnPoint[@"x"] integerValue];
-        int y = [spawnPoint[@"y"] integerValue];
-        
-        _player = [CCSprite spriteWithFile:@"Player.png"];
-        _player.position = ccp(x,y);
-        //_tileMap.position = ccp(winSize.width,winSize.height);
-        NSLog([NSString stringWithFormat:@"Player X: %f Y: %f\n",_player.position.x,_player.position.y ]);
-        
-        //_tileMap.position = ccp(x,y);
-        
-        [self addChild:_player];
-        [self setViewPointCenter:_player.position];
-        
-        [self addChild:_tileMap z:-1];
         
         self.touchEnabled = YES;
+        [self initPhysics];
+        
+        self.tileMap = [FLTiledMap tiledMapWithTMXFile:@"TileMap.tmx" andSpace: _space];
+        
+        [self addChild:_tileMap z:-1];
+        [self setupPlayerAtPosition:[_tileMap playerSpawnPoint]];
+        
+        [self scheduleUpdate];
     }
     return self;
 }
@@ -153,9 +178,6 @@
                 [[SimpleAudioEngine sharedEngine] playEffect:@"pickup.caf"];
                 self.numCollected++;
                 [_hud numCollectedChanged:_numCollected];
-                
-                [_meta removeTileAt:tileCoord];
-                [_foreground removeTileAt:tileCoord];
             }
         }
     }
@@ -172,6 +194,8 @@
     CGPoint playerPos = _player.position;
     CGPoint diff = ccpSub(touchLocation, playerPos);
     
+    cpBodyApplyImpulse([_player CPBody], cpv(diff.x,diff.y), cpv(16.0f, 0.0f));
+    /*
     if ( abs(diff.x) > abs(diff.y) ) {
         if (diff.x > 0) {
             playerPos.x += _tileMap.tileSize.width;
@@ -196,7 +220,7 @@
     {
         [self setPlayerPosition:playerPos];
     }
-    
+    */
     [self setViewPointCenter:_player.position];
 }
 
@@ -204,6 +228,18 @@
     int x = position.x / _tileMap.tileSize.width;
     int y = ((_tileMap.mapSize.height * _tileMap.tileSize.height) - position.y) / _tileMap.tileSize.height;
     return ccp(x, y);
+}
+
+-(void) update:(ccTime) delta
+{
+	// Should use a fixed size step based on the animation interval.
+	int steps = 2;
+	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
+	
+	for(int i=0; i<steps; i++){
+		cpSpaceStep(_space, dt);
+	}
+    [self setViewPointCenter:_player.position];
 }
 
 
