@@ -70,10 +70,38 @@
 -(void) initWalls {
     int x,y;
     CGSize mapSize = [self mapSize];
+    CGSize pixelMapSize = [self mapSize];
+    pixelMapSize.width *= self.tileSize.width;
+    pixelMapSize.height *= self.tileSize.height;
+    cpShape* mapBorder;
     
     for (x=0; x<mapSize.width; x++)
         for (y=0; y<mapSize.height; y++)
             [self createWallAtTile:ccp(x,y)];
+    
+    mapBorder = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(pixelMapSize.width,0), 0.0f);
+	cpShapeSetElasticity(mapBorder, 1.0f);
+    cpShapeSetFriction(mapBorder, 1.0f);
+    cpSpaceAddStaticShape(_space, mapBorder);
+    
+	// top
+	mapBorder = cpSegmentShapeNew( _space->staticBody, cpv(0,pixelMapSize.height), cpv(pixelMapSize.width,pixelMapSize.height), 0.0f);
+    cpShapeSetElasticity(mapBorder, 1.0f);
+    cpShapeSetFriction(mapBorder, 1.0f);
+    cpSpaceAddStaticShape(_space, mapBorder);
+    
+	// left
+	mapBorder = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,pixelMapSize.height), 0.0f);
+	cpShapeSetElasticity(mapBorder, 1.0f);
+    cpShapeSetFriction(mapBorder, 1.0f);
+    cpSpaceAddStaticShape(_space, mapBorder);
+    
+	// right
+	mapBorder = cpSegmentShapeNew( _space->staticBody, cpv(pixelMapSize.width,0), cpv(pixelMapSize.width,pixelMapSize.height), 0.0f);
+	cpShapeSetElasticity(mapBorder, 1.0f);
+    cpShapeSetFriction(mapBorder, 1.0f);
+    cpSpaceAddStaticShape(_space, mapBorder);
+    
 }
 
 @end

@@ -64,7 +64,7 @@
 
 -(void) initPhysics {
     _space = cpSpaceNew();
-    cpSpaceSetDamping(_space, 0.1f);
+    cpSpaceSetDamping(_space, 0.05f);
 	[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];}
 
 -(void) setupPlayerAtPosition:(CGPoint)position
@@ -78,7 +78,7 @@
 		cpv( 24,-54),
 	};*/
 	
-    cpBody* body = cpBodyNew(1.0f, cpMomentForCircle(1.0f, 0.0f, 32.0f, CGPointZero));
+    cpBody* body = cpBodyNew(1.0f, INFINITY);
 	cpBodySetPos( body, position );
 	cpSpaceAddBody(_space, body);
 	
@@ -156,45 +156,27 @@
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	return YES;
-}
-
--(void)setPlayerPosition:(CGPoint)position {
-	
-    CGPoint tileCoord = [self tileCoordForPosition:position];
-    int tileGid = [_meta tileGIDAt:tileCoord];
-    if (tileGid) {
-        NSDictionary *properties = [_tileMap propertiesForGID:tileGid];
-        if (properties) {
-            
-            NSString *collision = properties[@"Collidable"];
-            if (collision && [collision isEqualToString:@"True"]) {
-                [[SimpleAudioEngine sharedEngine] playEffect:@"hit.caf"];
-                return;
-            }
-            
-            NSString *collectible = properties[@"Collectable"];
-            if (collectible && [collectible isEqualToString:@"True"]) {
-                [[SimpleAudioEngine sharedEngine] playEffect:@"pickup.caf"];
-                self.numCollected++;
-                [_hud numCollectedChanged:_numCollected];
-            }
-        }
-    }
-    [[SimpleAudioEngine sharedEngine] playEffect:@"move.caf"];
-    _player.position = position;    
-}
-
--(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
     CGPoint touchLocation = [touch locationInView:touch.view];
     touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
     touchLocation = [self convertToNodeSpace:touchLocation];
     
     CGPoint playerPos = _player.position;
     CGPoint diff = ccpSub(touchLocation, playerPos);
-    
-    cpBodyApplyImpulse([_player CPBody], cpv(diff.x,diff.y), cpv(16.0f, 0.0f));
+    cpBodyApplyForce([_player CPBody], cpvneg(cpBodyGetForce([_player CPBody])), cpv(0.0f, 0.0f));
+    cpBodyApplyForce([_player CPBody], cpv(diff.x*5,diff.y*5), cpv(16.0f, 0.0f));
+    cpBodySetAngle([_player CPBody], atan2f(diff.x, -diff.y) - M_PI_2);
+	return YES;
+}
+
+-(void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
+    [self ccTouchBegan:touch withEvent:event];
+}
+
+-(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+
+    cpBodyApplyForce([_player CPBody], cpvneg(cpBodyGetForce([_player CPBody])), cpv(0.0f, 0.0f));
+
     /*
     if ( abs(diff.x) > abs(diff.y) ) {
         if (diff.x > 0) {
@@ -221,7 +203,7 @@
         [self setPlayerPosition:playerPos];
     }
     */
-    [self setViewPointCenter:_player.position];
+
 }
 
 - (CGPoint)tileCoordForPosition:(CGPoint)position {
