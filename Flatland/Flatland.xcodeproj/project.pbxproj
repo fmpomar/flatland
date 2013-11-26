@@ -181,9 +181,12 @@
 		D5DF52DE18429BB600CE6370 /* TileMap.tmx in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D618429BB600CE6370 /* TileMap.tmx */; };
 		D5DF52DF18429BB600CE6370 /* tmw_desert_spacing.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D718429BB600CE6370 /* tmw_desert_spacing.png */; };
 		D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52E1184306CC00CE6370 /* FLTiledMap.m */; };
-		D5DF52E51843222500CE6370 /* FLPhysicsPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52E41843222500CE6370 /* FLPhysicsPolygon.m */; };
 		D5DF52E818434A8D00CE6370 /* 2d.tmx in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52E618434A8D00CE6370 /* 2d.tmx */; };
 		D5DF52E918434A8D00CE6370 /* tileset.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52E718434A8D00CE6370 /* tileset.png */; };
+		D5DF52EC1844048500CE6370 /* FLPathFinding.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52EB1844048500CE6370 /* FLPathFinding.m */; };
+		D5DF52F218443DD000CE6370 /* FLPhysicsCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52F118443DCC00CE6370 /* FLPhysicsCircle.m */; };
+		D5DF52F518443E8100CE6370 /* FLPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52F418443E8000CE6370 /* FLPhysicsBody.m */; };
+		D5DF52F818444B3400CE6370 /* FLEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52F718444B3300CE6370 /* FLEnemy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -538,10 +541,16 @@
 		D5DF52D718429BB600CE6370 /* tmw_desert_spacing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmw_desert_spacing.png; sourceTree = "<group>"; };
 		D5DF52E0184306CB00CE6370 /* FLTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLTiledMap.h; sourceTree = "<group>"; };
 		D5DF52E1184306CC00CE6370 /* FLTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLTiledMap.m; sourceTree = "<group>"; };
-		D5DF52E31843222500CE6370 /* FLPhysicsPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhysicsPolygon.h; sourceTree = "<group>"; };
-		D5DF52E41843222500CE6370 /* FLPhysicsPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhysicsPolygon.m; sourceTree = "<group>"; };
 		D5DF52E618434A8D00CE6370 /* 2d.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 2d.tmx; sourceTree = "<group>"; };
 		D5DF52E718434A8D00CE6370 /* tileset.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileset.png; sourceTree = "<group>"; };
+		D5DF52EA1844048400CE6370 /* FLPathFinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPathFinding.h; sourceTree = "<group>"; };
+		D5DF52EB1844048500CE6370 /* FLPathFinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPathFinding.m; sourceTree = "<group>"; };
+		D5DF52F018443DC900CE6370 /* FLPhysicsCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhysicsCircle.h; sourceTree = "<group>"; };
+		D5DF52F118443DCC00CE6370 /* FLPhysicsCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhysicsCircle.m; sourceTree = "<group>"; };
+		D5DF52F318443E8000CE6370 /* FLPhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPhysicsBody.h; sourceTree = "<group>"; };
+		D5DF52F418443E8000CE6370 /* FLPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPhysicsBody.m; sourceTree = "<group>"; };
+		D5DF52F618444B3200CE6370 /* FLEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLEnemy.h; sourceTree = "<group>"; };
+		D5DF52F718444B3300CE6370 /* FLEnemy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLEnemy.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -605,10 +614,16 @@
 				D5DF52CF18429BB600CE6370 /* TileGameResources */,
 				D5DF52CC18429AB000CE6370 /* MainLayer.h */,
 				D5DF52CD18429AB000CE6370 /* MainLayer.m */,
+				D5DF52F618444B3200CE6370 /* FLEnemy.h */,
+				D5DF52F718444B3300CE6370 /* FLEnemy.m */,
+				D5DF52F318443E8000CE6370 /* FLPhysicsBody.h */,
+				D5DF52F418443E8000CE6370 /* FLPhysicsBody.m */,
+				D5DF52F018443DC900CE6370 /* FLPhysicsCircle.h */,
+				D5DF52F118443DCC00CE6370 /* FLPhysicsCircle.m */,
 				D5DF52E0184306CB00CE6370 /* FLTiledMap.h */,
 				D5DF52E1184306CC00CE6370 /* FLTiledMap.m */,
-				D5DF52E31843222500CE6370 /* FLPhysicsPolygon.h */,
-				D5DF52E41843222500CE6370 /* FLPhysicsPolygon.m */,
+				D5DF52EA1844048400CE6370 /* FLPathFinding.h */,
+				D5DF52EB1844048500CE6370 /* FLPathFinding.m */,
 				D5DF4FBA184294FF00CE6370 /* AppDelegate.h */,
 				D5DF4FBB184294FF00CE6370 /* AppDelegate.m */,
 				D5DF4FBD184294FF00CE6370 /* HelloWorldLayer.h */,
@@ -1353,7 +1368,10 @@
 				D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */,
 				D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */,
 				D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */,
-				D5DF52E51843222500CE6370 /* FLPhysicsPolygon.m in Sources */,
+				D5DF52EC1844048500CE6370 /* FLPathFinding.m in Sources */,
+				D5DF52F218443DD000CE6370 /* FLPhysicsCircle.m in Sources */,
+				D5DF52F518443E8100CE6370 /* FLPhysicsBody.m in Sources */,
+				D5DF52F818444B3400CE6370 /* FLEnemy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

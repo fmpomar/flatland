@@ -5,6 +5,8 @@
 
 #import "FLTiledMap.h"
 
+#import "FLPhysicsCircle.h"
+
 @implementation HudLayer
 {
     CCLabelTTF *_label;
@@ -33,7 +35,7 @@
 @interface MainLayer()
 
 @property (strong) FLTiledMap *tileMap;
-@property (strong) CCPhysicsSprite *player;
+@property (strong) FLPhysicsBody *player;
 @property (strong) CCTMXLayer *meta;
 @property (strong) HudLayer *hud;
 @property (assign) int numCollected;
@@ -65,7 +67,7 @@
 -(void) initPhysics {
     _space = cpSpaceNew();
     cpSpaceSetDamping(_space, 0.05f);
-	[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];
+	//[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];
 }
 
 -(void) setupRandomObstacles {
@@ -82,16 +84,23 @@
 		cpv( 24, 54),
 		cpv( 24,-54),
 	};*/
+    
+    _player = [[FLPhysicsCircle alloc] initWithSpace:_space Position:position R:16.0f M:0.5f I:INFINITY color:ccc4f(0.0f, 0.0f, 1.0f, 1.0f) andDrawDirection:YES];
+    
+    [self addChild:_player];
+    _player.visible = YES;
+    /*
+    return;
 	
     cpBody* body = cpBodyNew(1.0f, INFINITY);
 	cpBodySetPos( body, position );
 	cpSpaceAddBody(_space, body);
-	
+	*/
 	/*cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
 	cpShapeSetElasticity( shape, 0.5f );
 	cpShapeSetFriction( shape, 0.5f );
 	cpSpaceAddShape(_space, shape);*/
-    
+    /*
     cpShape* shape = cpCircleShapeNew(body, 16.0f, CGPointZero);
     cpShapeSetElasticity( shape, 0.5f );
 	cpShapeSetFriction( shape, 0.5f );
@@ -105,7 +114,7 @@
     _player = sprite;
     [self addChild:_player];
     [self setViewPointCenter:_player.position];
-    
+    */
     
 }
 
@@ -167,9 +176,11 @@
     
     CGPoint playerPos = _player.position;
     CGPoint diff = ccpSub(touchLocation, playerPos);
-    cpBodyApplyForce([_player CPBody], cpvneg(cpBodyGetForce([_player CPBody])), cpv(0.0f, 0.0f));
-    cpBodyApplyForce([_player CPBody], cpv(diff.x*5,diff.y*5), cpv(16.0f, 0.0f));
-    cpBodySetAngle([_player CPBody], atan2f(diff.x, -diff.y) - M_PI_2);
+
+    [_player resetForces];
+    [_player applyForce:cpv(diff.x*5, diff.y*5) at:CGPointZero];
+    //cpBodySetAngle(_player.body, atan2f(diff.x, -diff.y) - M_PI_2);
+    _player.rotation = atan2f(diff.x, -diff.y) - M_PI_2;
 	return YES;
 }
 
@@ -179,9 +190,7 @@
 
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-
-    cpBodyApplyForce([_player CPBody], cpvneg(cpBodyGetForce([_player CPBody])), cpv(0.0f, 0.0f));
-
+    [_player resetForces];
     /*
     if ( abs(diff.x) > abs(diff.y) ) {
         if (diff.x > 0) {

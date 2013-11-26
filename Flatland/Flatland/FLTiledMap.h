@@ -14,4 +14,11 @@
 +(id) tiledMapWithTMXFile:(NSString *)tmxFile andSpace: (cpSpace*) space;
 -(id) initWithTMXFile:(NSString *)tmxFile andSpace: (cpSpace*) space;
 -(CGPoint) playerSpawnPoint;
+-(CGPoint) worldToMapCoords: (CGPoint) worldCoords;
+-(CGPoint) mapToWorldCoords: (CGPoint) mapCoords;
+
+-(Boolean) pointBlocked: (cpVect) worldCoords;
+-(Boolean) tileBlocked: (CGPoint) tileCoord;
+-(Boolean) tileInBounds: (CGPoint) tileCoord;
+
 @end

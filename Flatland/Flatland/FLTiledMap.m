@@ -42,6 +42,8 @@
 }
 
 -(Boolean) tileBlocked: (CGPoint)tileCoord {
+    if (![self tileInBounds:tileCoord])
+        return true;
     int tileGid = [_metaLayer tileGIDAt: tileCoord];
     if (tileGid) {
         NSDictionary *properties = [self propertiesForGID:tileGid];
@@ -50,19 +52,33 @@
             return (collision && [collision isEqualToString:@"True"]);
         }
     }
-    return (![self tileInBounds:tileCoord]);
+    return false;
+}
+
+-(Boolean) pointBlocked: (cpVect) worldCoords {
+    return [self tileBlocked:[self worldToMapCoords:worldCoords]];
+}
+
+-(CGPoint) worldToMapCoords:(cpVect)worldCoords {
+    return ccp((worldCoords.x-self.tileSize.width/2.0f)/self.tileSize.width,
+               self.mapSize.height - ((worldCoords.y-self.tileSize.height/2.0f)/self.tileSize.height));
+}
+
+-(cpVect) mapToWorldCoords:(CGPoint)mapCoords {
+    return cpv(mapCoords.x*self.tileSize.width+self.tileSize.width/2.0f,
+               (self.tileSize.height*(self.mapSize.height-1))-mapCoords.y*self.tileSize.height+self.tileSize.height/2.0f);
 }
 
 -(void) createWallAtTile: (CGPoint) tileCoord {
     if ([self tileBlocked:tileCoord]) {
         cpShape * wallShape;
         cpVect verts[] = {
-            cpv(0,0),
-            cpv(0, self.tileSize.height),
-            cpv( self.tileSize.width, self.tileSize.height),
-            cpv( self.tileSize.width,0),
+            cpv(-self.tileSize.width/2.0f,-self.tileSize.height/2.0f),
+            cpv(-self.tileSize.width/2.0f, self.tileSize.height/2.0f),
+            cpv( self.tileSize.width/2.0f, self.tileSize.height/2.0f),
+            cpv( self.tileSize.width/2.0f,-self.tileSize.height/2.0f),
         };
-        cpVect offset = cpv(tileCoord.x*self.tileSize.width,(self.tileSize.height*(self.mapSize.height-1))-tileCoord.y*self.tileSize.height);
+        cpVect offset = [self mapToWorldCoords: tileCoord];
         wallShape = cpPolyShapeNew(_space->staticBody, 4, verts, offset);
         cpShapeSetElasticity(wallShape, 1.0f);
         cpShapeSetFriction(wallShape, 1.0f);
