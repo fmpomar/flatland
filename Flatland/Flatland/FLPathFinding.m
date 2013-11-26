@@ -95,9 +95,11 @@
 {
     NSMutableArray* _nodes;
     NSEnumerator* _enum;
+    FLTiledMap* _map;
+    FLPathFindingNode* _savedNode;
 }
 
--(id) initWithDestination:(FLPathFindingNode *)destNode {
+-(id) initWithDestination:(FLPathFindingNode *)destNode andMap: (FLTiledMap*) map {
     FLPathFindingNode* current = destNode;
     _nodes = [NSMutableArray array];
     while (current) {
@@ -105,11 +107,26 @@
         current = [current getParent];
     }
     _enum = [_nodes reverseObjectEnumerator];
+    _map = map;
+    _savedNode = nil;
     return self;
 }
 
 -(CGPoint) next {
-    return [[_enum nextObject] getPosition];
+    FLPathFindingNode* nextNode;
+    if ([self hasNext]) {
+        nextNode = _savedNode;
+        _savedNode = nil;
+        return [_map mapToWorldCoords:[nextNode getPosition]];
+    } else {
+        return CGPointZero;
+    }
+}
+
+-(BOOL) hasNext {
+    if (_savedNode) return YES;
+    _savedNode = [_enum nextObject];
+    return (_savedNode != nil);
 }
 
 @end
@@ -161,8 +178,14 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     NSMutableOrderedSet* openSet = [NSMutableOrderedSet orderedSet];
     FLPathFindingNode* originNode = [self getNode: [_map worldToMapCoords:origin]];
     FLPathFindingNode* destNode = [self getNode: [_map worldToMapCoords:destination]];
+    NSLog(@"PathFinding from %f, %f to %f,%f (WORLD)", origin.x, origin.y, destination.x, destination.y);
+    NSLog(@"PathFinding from %f, %f to %f,%f (MAP)", [_map worldToMapCoords:origin].x, [_map worldToMapCoords:origin].y, [_map worldToMapCoords:destination].x, [_map worldToMapCoords:destination].y);
     
     if (!originNode || !destNode) return nil; //No path
+    
+    NSLog(@"PathFinding from %f, %f to %f,%f (MAP TRANSLATED)", originNode.getPosition.x, originNode.getPosition.y, destNode.getPosition.x, destNode.getPosition.y);
+    NSLog(@"PathFinding from %f, %f to %f,%f (WORLD TRANSLATED)", [_map mapToWorldCoords: originNode.getPosition].x, [_map mapToWorldCoords: originNode.getPosition].y, [_map mapToWorldCoords: destNode.getPosition].x, [_map mapToWorldCoords: destNode.getPosition].y);
+
     
     [self reset];
     
@@ -170,12 +193,14 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     
     [openSet addObject: originNode];
     
+    NSLog(@"PathFinding loop started");
+    
     while ([openSet count] > 0) {
         FLPathFindingNode* lowest = getLowestNode(openSet);
         
         [lowest setVisited];
         [openSet removeObject:lowest];
-        
+                
         if (lowest == destNode) break;
         
         for (FLPathFindingEdge*edge in [lowest getEdges]) {
@@ -197,7 +222,7 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     }
     
     if ([destNode getParent])
-        return [[FLPath alloc] initWithDestination: destNode];
+        return [[FLPath alloc] initWithDestination: destNode andMap:_map];
     else
         return nil; // Path not found.
     
@@ -214,10 +239,11 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     // Create nodes
     for (y = 0; y < _dims.height; y++) {
         for (x = 0; x < _dims.width; x++) {
-            if ([_map tileBlocked:ccp(x,y)])
+            if ([_map tileBlocked:ccp(x,y)]) {
                 [self setNode:nil at:ccp(x,y)];
-            else
+            } else {
                 [self setNode:[[FLPathFindingNode alloc] initWithPosition:ccp(x,y)] at:ccp(x,y)];
+            }
         }
     }
 

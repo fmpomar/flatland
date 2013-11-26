@@ -60,8 +60,8 @@
 }
 
 -(CGPoint) worldToMapCoords:(cpVect)worldCoords {
-    return ccp((worldCoords.x-self.tileSize.width/2.0f)/self.tileSize.width,
-               self.mapSize.height - ((worldCoords.y-self.tileSize.height/2.0f)/self.tileSize.height));
+    return ccp((int)(worldCoords.x/self.tileSize.width),
+               (int)(self.mapSize.height - (worldCoords.y/self.tileSize.height)));
 }
 
 -(cpVect) mapToWorldCoords:(CGPoint)mapCoords {

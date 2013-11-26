@@ -33,11 +33,12 @@
 @end
 
 @interface FLPath : NSObject
--(id) initWithDestination: (FLPathFindingNode*) destNode;
+-(id) initWithDestination: (FLPathFindingNode*) destNode andMap: (FLTiledMap*) map;
 -(CGPoint) next;
+-(BOOL) hasNext;
 @end
 
 @interface FLPathFinding : NSObject
 -(id) initWithMap: (FLTiledMap*) map;
-
+-(FLPath*) pathFrom: (cpVect) origin To: (cpVect) destination;
 @end

@@ -7,6 +7,8 @@
 
 #import "FLPhysicsCircle.h"
 
+#import "FLEnemy.h"
+
 @implementation HudLayer
 {
     CCLabelTTF *_label;
@@ -39,6 +41,8 @@
 @property (strong) CCTMXLayer *meta;
 @property (strong) HudLayer *hud;
 @property (assign) int numCollected;
+
+@property (strong) FLEnemy* testEnemy;
 
 @end
 
@@ -139,6 +143,10 @@
         [self addChild:_tileMap z:-1];
         [self setupPlayerAtPosition:[_tileMap playerSpawnPoint]];
         
+        self.testEnemy = [[FLEnemy alloc] initWithPlayer:_player pathFinding: [[FLPathFinding alloc] initWithMap:_tileMap] space:_space andPosition:ccp(_player.position.x + 32*10,_player.position.y)];
+        
+        [self addChild:_testEnemy];
+        
         [self scheduleUpdate];
     }
     return self;
@@ -235,6 +243,7 @@
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(_space, dt);
 	}
+    
     [self setViewPointCenter:_player.position];
 }
 
