@@ -168,7 +168,6 @@
 		D5DF4FB3184294FF00CE6370 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FB2184294FF00CE6370 /* cpVect.c */; };
 		D5DF4FB9184294FF00CE6370 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FB8184294FF00CE6370 /* main.m */; };
 		D5DF4FBC184294FF00CE6370 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FBB184294FF00CE6370 /* AppDelegate.m */; };
-		D5DF4FBF184294FF00CE6370 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FBE184294FF00CE6370 /* HelloWorldLayer.m */; };
 		D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FC11842950000CE6370 /* IntroLayer.m */; };
 		D5DF4FC41842950000CE6370 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DF4FC31842950000CE6370 /* grossini_dance_atlas.png */; };
 		D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52CD18429AB000CE6370 /* MainLayer.m */; };
@@ -524,8 +523,6 @@
 		D5DF4FB8184294FF00CE6370 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D5DF4FBA184294FF00CE6370 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5DF4FBB184294FF00CE6370 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D5DF4FBD184294FF00CE6370 /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		D5DF4FBE184294FF00CE6370 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
 		D5DF4FC01842950000CE6370 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		D5DF4FC11842950000CE6370 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		D5DF4FC31842950000CE6370 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini_dance_atlas.png; path = Resources/grossini_dance_atlas.png; sourceTree = "<group>"; };
@@ -626,8 +623,6 @@
 				D5DF52EB1844048500CE6370 /* FLPathFinding.m */,
 				D5DF4FBA184294FF00CE6370 /* AppDelegate.h */,
 				D5DF4FBB184294FF00CE6370 /* AppDelegate.m */,
-				D5DF4FBD184294FF00CE6370 /* HelloWorldLayer.h */,
-				D5DF4FBE184294FF00CE6370 /* HelloWorldLayer.m */,
 				D5DF4FC01842950000CE6370 /* IntroLayer.h */,
 				D5DF4FC11842950000CE6370 /* IntroLayer.m */,
 				D5DF4DCE184294FB00CE6370 /* Resources */,
@@ -1364,7 +1359,6 @@
 				D5DF4FB3184294FF00CE6370 /* cpVect.c in Sources */,
 				D5DF4FB9184294FF00CE6370 /* main.m in Sources */,
 				D5DF4FBC184294FF00CE6370 /* AppDelegate.m in Sources */,
-				D5DF4FBF184294FF00CE6370 /* HelloWorldLayer.m in Sources */,
 				D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */,
 				D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */,
 				D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */,
@@ -1489,6 +1483,7 @@
 				D5DF4FC91842950000CE6370 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

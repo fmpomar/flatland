@@ -89,7 +89,7 @@
 		cpv( 24,-54),
 	};*/
     
-    _player = [[FLPhysicsCircle alloc] initWithSpace:_space Position:position R:16.0f M:0.5f I:INFINITY color:ccc4f(0.0f, 0.0f, 1.0f, 1.0f) andDrawDirection:YES];
+    self.player = [[FLPhysicsCircle alloc] initWithSpace:_space Position:position R:16.0f M:0.5f I:INFINITY color:ccc4f(0.0f, 0.0f, 1.0f, 1.0f) andDrawDirection:YES];
     
     [self addChild:_player];
     _player.visible = YES;

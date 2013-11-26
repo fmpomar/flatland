@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407131699.548926"
+         timestampString = "407139809.527263"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
+         startingLineNumber = "115"
+         endingLineNumber = "115"
          landmarkName = "-getNode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407131699.548926"
+         timestampString = "407139809.527263"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "161"
-         endingLineNumber = "161"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-setNode:at:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,13 +47,26 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407131699.548926"
+         timestampString = "407139809.527263"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "151"
-         endingLineNumber = "151"
-         landmarkName = "@implementation FLPathFinding"
-         landmarkType = "3">
+         startingLineNumber = "83"
+         endingLineNumber = "83"
+         landmarkName = "-hasNext"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Flatland/FLEnemy.m"
+         timestampString = "407141558.901628"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "44"
+         endingLineNumber = "44"
+         landmarkName = "-calculatePathToPlayer"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>

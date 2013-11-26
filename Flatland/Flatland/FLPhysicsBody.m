@@ -38,6 +38,11 @@
     return self;
 }
 
+
+-(void) applyImpulse: (cpVect) impulse at: (cpVect) offset {
+    cpBodyApplyImpulse(_body, impulse, offset);
+}
+
 -(void) applyForce:(cpVect)force at:(cpVect)offset {
     cpBodyApplyForce(_body, force, offset);
 }

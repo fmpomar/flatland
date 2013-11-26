@@ -8,11 +8,14 @@
 
 #import "FLTiledMap.h"
 
+@interface FLTiledMap()
+
+@property (nonatomic, assign) cpSpace* space;
+@property (nonatomic, strong) CCTMXLayer* metaLayer;
+
+@end
+
 @implementation FLTiledMap
-{
-    cpSpace* _space;
-    CCTMXLayer* _metaLayer;
-}
 
 +(id) tiledMapWithTMXFile:(NSString *)tmxFile andSpace:(cpSpace*)space {
     return [[self alloc] initWithTMXFile:tmxFile andSpace:space];
@@ -20,8 +23,8 @@
 
 -(id) initWithTMXFile:(NSString *)tmxFile andSpace:(cpSpace*)space {
     self = [super initWithTMXFile:tmxFile];
-    _space = space;
-    _metaLayer = [self layerNamed:@"Meta"];
+    self.space = space;
+    self.metaLayer = [self layerNamed:@"Meta"];
     _metaLayer.visible = NO;
     [self initWalls];
     return self;

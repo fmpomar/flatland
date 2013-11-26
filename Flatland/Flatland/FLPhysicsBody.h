@@ -10,13 +10,14 @@
 #import "cocos2d.h"
 
 @interface FLPhysicsBody : CCDrawNode
-@property (readonly) cpSpace* space;
-@property (readonly) cpBody* body;
+@property (readonly,assign) cpSpace* space;
+@property (readonly,assign) cpBody* body;
 
 -(id) initWithSpace: (cpSpace*) space position: (CGPoint) position M: (float) mass I: (float) momentOfInertia;
 
 -(void) resetForces;
 -(void) applyForce: (cpVect) force at: (cpVect) offset;
+-(void) applyImpulse: (cpVect) impulse at: (cpVect) offset;
 -(cpVect) resultant;
 
 @end

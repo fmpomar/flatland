@@ -11,20 +11,23 @@
 #define DEFAULT_CIRCLE_ELASTICITY 0.5f
 #define DEFAULT_CIRCLE_FRICTION 0.5f
 
+@interface FLPhysicsCircle()
+
+@property (nonatomic, assign) cpShape* shape;
+@property (nonatomic, assign) ccColor4F color;
+@property (nonatomic, assign) BOOL drawDirection;
+
+@end
+
 @implementation FLPhysicsCircle
-{
-    cpShape* _shape;
-    ccColor4F _color;
-    BOOL _drawDirection;
-}
 
 -(id) initWithSpace: (cpSpace*) space Position: (cpVect) position R: (float) radius M: (float) mass I: (float) momentOfInertia color: (ccColor4F) color andDrawDirection: (BOOL) drawDirection {
 	
     self = [super initWithSpace:space position:position M: mass I:momentOfInertia];
     
-    _shape = cpCircleShapeNew(self.body, radius, CGPointZero);
-    _color = color;
-    _drawDirection = drawDirection;
+    self.shape = cpCircleShapeNew(self.body, radius, CGPointZero);
+    self.color = color;
+    self.drawDirection = drawDirection;
     
     cpShapeSetElasticity(_shape, DEFAULT_CIRCLE_ELASTICITY);
 	cpShapeSetFriction(_shape, DEFAULT_CIRCLE_FRICTION);

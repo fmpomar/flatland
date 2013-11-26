@@ -10,25 +10,27 @@
 #import "FLTiledMap.h"
 
 @interface FLPathFindingNode : NSObject
+
+@property (nonatomic,assign) float accumCost;
+@property (nonatomic,strong) FLPathFindingNode* parent;
+@property (nonatomic,assign,readonly) BOOL visited;
+@property (nonatomic,strong,readonly) NSMutableArray* edges;
+@property (nonatomic,assign,readonly) CGPoint position;
+
 -(id) initWithPosition: (CGPoint) position;
 -(void) addNeighbour:(FLPathFindingNode *)neighbour withCost: (float) cost;
--(NSMutableArray*) getEdges;
--(float) getAccumCost;
--(void) setAccumCost: (float) cost;
--(CGPoint) getPosition;
--(void) setParent: (FLPathFindingNode*) parent;
--(FLPathFindingNode*) getParent;
+
 -(void) reset;
--(BOOL) isVisited;
 -(void) setVisited;
+
 @end
 
 @interface FLPathFindingEdge : NSObject
 
+@property (nonatomic,readonly,assign) float cost;
+@property (nonatomic,readonly,strong) FLPathFindingNode* target;
 
 -(id) initWithTarget: (FLPathFindingNode*) target andCost: (float) cost;
--(float) getCost;
--(FLPathFindingNode*) getTarget;
 
 @end
 
@@ -39,6 +41,9 @@
 @end
 
 @interface FLPathFinding : NSObject
+
+@property (nonatomic,strong,readonly) FLTiledMap* map;
+
 -(id) initWithMap: (FLTiledMap*) map;
 -(FLPath*) pathFrom: (cpVect) origin To: (cpVect) destination;
 @end

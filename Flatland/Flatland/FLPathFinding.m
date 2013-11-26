@@ -9,17 +9,10 @@
 #import "FLPathFinding.h"
 
 @implementation FLPathFindingNode
-{
-    CGPoint _position;
-    NSMutableArray* _edges;
-    BOOL _visited;
-    FLPathFindingNode* _parent;
-    float _accumCost;
-}
 
 -(id) initWithPosition:(CGPoint)position {
     _position = position;
-    _edges = [NSMutableArray array];
+    _edges = [[NSMutableArray array] retain];
     
     return self;
 }
@@ -35,34 +28,6 @@
     _accumCost = INFINITY;
 }
 
--(NSMutableArray*) getEdges {
-    return _edges;
-}
-
--(float) getAccumCost {
-    return _accumCost;
-}
-
--(void) setAccumCost: (float) cost {
-    _accumCost = cost;
-}
-
--(CGPoint) getPosition {
-    return _position;
-}
-
--(void) setParent:(FLPathFindingNode *)parent {
-    _parent = parent;
-}
-
--(FLPathFindingNode*) getParent {
-    return _parent;
-}
-
--(BOOL) isVisited {
-    return _visited;
-}
-
 -(void) setVisited {
     _visited = YES;
 }
@@ -70,44 +35,35 @@
 @end
 
 @implementation FLPathFindingEdge
-{
-    float _cost;
-    FLPathFindingNode* _target;
-}
 
 -(id) initWithTarget: (FLPathFindingNode*) target andCost: (float) cost {
     _cost = cost;
-    _target = target;
+    _target = [target retain];
     return self;
-}
-
--(float) getCost {
-    return _cost;
-}
-
--(FLPathFindingNode*) getTarget {
-    return _target;
 }
 
 @end
 
+@interface FLPath()
+
+@property (nonatomic, strong) NSMutableArray* nodes;
+@property (nonatomic, strong) NSEnumerator* enumer;
+@property (nonatomic, strong) FLTiledMap* map;
+@property (nonatomic, strong) FLPathFindingNode* savedNode;
+
+@end
+
 @implementation FLPath
-{
-    NSMutableArray* _nodes;
-    NSEnumerator* _enum;
-    FLTiledMap* _map;
-    FLPathFindingNode* _savedNode;
-}
 
 -(id) initWithDestination:(FLPathFindingNode *)destNode andMap: (FLTiledMap*) map {
     FLPathFindingNode* current = destNode;
-    _nodes = [NSMutableArray array];
+    self.nodes = [NSMutableArray array];
     while (current) {
         [_nodes addObject: current];
-        current = [current getParent];
+        current = current.parent;
     }
-    _enum = [_nodes reverseObjectEnumerator];
-    _map = map;
+    self.enumer = [_nodes reverseObjectEnumerator];
+    self.map = map;
     _savedNode = nil;
     return self;
 }
@@ -117,7 +73,7 @@
     if ([self hasNext]) {
         nextNode = _savedNode;
         _savedNode = nil;
-        return [_map mapToWorldCoords:[nextNode getPosition]];
+        return [_map mapToWorldCoords:nextNode.position];
     } else {
         return CGPointZero;
     }
@@ -125,7 +81,7 @@
 
 -(BOOL) hasNext {
     if (_savedNode) return YES;
-    _savedNode = [_enum nextObject];
+    _savedNode = [_enumer nextObject];
     return (_savedNode != nil);
 }
 
@@ -135,21 +91,24 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     FLPathFindingNode* lowest = nil;
     float lowestAccumCost = INFINITY;
     for (FLPathFindingNode* node in set) {
-        if (!lowest || lowestAccumCost > [node getAccumCost]) {
+        if (!lowest || lowestAccumCost > node.accumCost) {
             lowest = node;
-            lowestAccumCost = [node getAccumCost];
+            lowestAccumCost = node.accumCost;
         }
     }
     return lowest;
 }
 
+@interface FLPathFinding()
+
+@property (nonatomic, assign) FLPathFindingNode** nodes;
+@property (nonatomic, assign) int nodesSize;
+@property (nonatomic, strong) FLTiledMap* map;
+@property (nonatomic, assign) CGSize dims;
+
+@end
+
 @implementation FLPathFinding
-{
-    FLPathFindingNode** _nodes;
-    int _nodesSize;
-    FLTiledMap* _map;
-    CGSize _dims;
-}
 
 -(FLPathFindingNode*) getNode: (CGPoint) position  {
     if ([_map tileInBounds: position])
@@ -160,7 +119,7 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
 
 -(void) setNode: (FLPathFindingNode*) node at: (CGPoint) position {
     if ([_map tileInBounds: position])
-        _nodes[(int)(position.x+position.y*_dims.width)] = node;
+        _nodes[(int)(position.x+position.y*_dims.width)] = [node retain];
 }
 
 -(void) reset {
@@ -178,22 +137,13 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     NSMutableOrderedSet* openSet = [NSMutableOrderedSet orderedSet];
     FLPathFindingNode* originNode = [self getNode: [_map worldToMapCoords:origin]];
     FLPathFindingNode* destNode = [self getNode: [_map worldToMapCoords:destination]];
-    NSLog(@"PathFinding from %f, %f to %f,%f (WORLD)", origin.x, origin.y, destination.x, destination.y);
-    NSLog(@"PathFinding from %f, %f to %f,%f (MAP)", [_map worldToMapCoords:origin].x, [_map worldToMapCoords:origin].y, [_map worldToMapCoords:destination].x, [_map worldToMapCoords:destination].y);
     
     if (!originNode || !destNode) return nil; //No path
-    
-    NSLog(@"PathFinding from %f, %f to %f,%f (MAP TRANSLATED)", originNode.getPosition.x, originNode.getPosition.y, destNode.getPosition.x, destNode.getPosition.y);
-    NSLog(@"PathFinding from %f, %f to %f,%f (WORLD TRANSLATED)", [_map mapToWorldCoords: originNode.getPosition].x, [_map mapToWorldCoords: originNode.getPosition].y, [_map mapToWorldCoords: destNode.getPosition].x, [_map mapToWorldCoords: destNode.getPosition].y);
 
-    
     [self reset];
     
-    [originNode setAccumCost:[self tileDistanceFrom:[originNode getPosition] To:[destNode getPosition]]];
-    
+    originNode.accumCost = [self tileDistanceFrom:originNode.position To:destNode.position];
     [openSet addObject: originNode];
-    
-    NSLog(@"PathFinding loop started");
     
     while ([openSet count] > 0) {
         FLPathFindingNode* lowest = getLowestNode(openSet);
@@ -203,17 +153,17 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
                 
         if (lowest == destNode) break;
         
-        for (FLPathFindingEdge*edge in [lowest getEdges]) {
-            FLPathFindingNode* neighbour = [edge getTarget];
-            if (![neighbour isVisited]) {
-                float cost = [edge getCost];
-                float newAccumCost = cost+[lowest getAccumCost]+[self tileDistanceFrom:[neighbour getPosition] To:[destNode getPosition]];
+        for (FLPathFindingEdge*edge in lowest.edges) {
+            FLPathFindingNode* neighbour = edge.target;
+            if (!neighbour.visited) {
+                float cost = edge.cost;
+                float newAccumCost = cost+lowest.accumCost+[self tileDistanceFrom:neighbour.position To:destNode.position];
                 
                 if (![openSet containsObject:neighbour]) {
                     [neighbour setParent: lowest];
                     [neighbour setAccumCost: newAccumCost];
                     [openSet addObject:neighbour];
-                } else if (newAccumCost < [neighbour getAccumCost]) {
+                } else if (newAccumCost < neighbour.accumCost) {
                     [neighbour setParent: lowest];
                     [neighbour setAccumCost: newAccumCost];
                 }
@@ -221,7 +171,7 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
         }
     }
     
-    if ([destNode getParent])
+    if (destNode.parent)
         return [[FLPath alloc] initWithDestination: destNode andMap:_map];
     else
         return nil; // Path not found.
@@ -231,10 +181,10 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
 
 -(id) initWithMap:(FLTiledMap *)map {
     int x, y;
-    _nodesSize = map.mapSize.height*map.mapSize.width;
-    _nodes = malloc(sizeof(FLPathFindingNode*)*_nodesSize);
-    _map = map;
-    _dims = map.mapSize;
+    self.nodesSize = map.mapSize.height*map.mapSize.width;
+    self.nodes = malloc(sizeof(FLPathFindingNode*)*_nodesSize);
+    self.map = map;
+    self.dims = map.mapSize;
     
     // Create nodes
     for (y = 0; y < _dims.height; y++) {

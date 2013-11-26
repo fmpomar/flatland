@@ -10,5 +10,7 @@
 #import "FLPathFinding.h"
 
 @interface FLEnemy : FLPhysicsCircle
+
 -(id) initWithPlayer: (FLPhysicsBody*) player pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position;
+
 @end
