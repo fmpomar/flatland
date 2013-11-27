@@ -83,7 +83,7 @@
 }
 
 -(void) endGame {
-    NSLog(@"Game actually ended.");
+    self.player.position = [_tileMap playerSpawnPoint];
 }
 
 -(void) enemyExpired:(FLEnemy *)enemy {

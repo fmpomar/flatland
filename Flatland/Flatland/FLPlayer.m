@@ -7,6 +7,7 @@
 //
 
 #import "FLPlayer.h"
+#import "FLEnemy.h"
 
 #define PROJECTILE_SPEED 100.0f
 
@@ -35,7 +36,8 @@
 
 -(void) collisionBegin:(FLPhysicsBody *)otherBody {
     NSLog(@"Game Lost!");
-    [_game endGame];
+    if ([otherBody isKindOfClass:[FLEnemy class]])
+        [_game endGame];
 }
 
 -(void)dealloc {

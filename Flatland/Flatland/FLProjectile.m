@@ -7,6 +7,7 @@
 //
 
 #import "FLProjectile.h"
+#import "FLEnemy.h"
 
 @interface FLProjectile()
 
@@ -21,14 +22,15 @@
 }
 
 -(id) initWithGame:(id<FLGame>)game space:(cpSpace *)space andPosition:(CGPoint)position {
-    self = [super initWithSpace:space Position:position R:2.0f M:0.1f I:INFINITY color:ccc4f(0.0f, 0.0f, 0.0f, 1.0f) andDrawDirection:NO];
+    self = [super initWithSpace:space Position:position R:3.0f M:0.1f I:INFINITY color:ccc4f(0.0f, 0.0f, 0.0f, 1.0f) andDrawDirection:NO];
     self.game = game;
     [self schedule:@selector(scheduledExpiration) interval:1.0f];
     return self;
 }
 
 -(void)collisionBegin:(FLPhysicsBody *)otherBody {
-    [_game projectileExpired:self];
+    if ([otherBody isKindOfClass:[FLEnemy class]])
+        [_game projectileExpired:self];
 }
 
 -(void) scheduledExpiration {

@@ -17,6 +17,7 @@
 -(void) endGame;
 -(void) enemyExpired: (FLEnemy*) enemy;
 -(void) projectileExpired: (FLProjectile*) projectile;
+
 -(FLPlayer*) getPlayer;
 
 @end

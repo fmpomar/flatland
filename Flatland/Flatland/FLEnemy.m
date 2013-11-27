@@ -93,7 +93,8 @@
 }
 
 -(void) collisionBegin:(FLPhysicsBody *)otherBody {
-    [_game enemyExpired:self];
+    if ([otherBody isKindOfClass:[FLProjectile class]])
+        [_game enemyExpired:self];
 }
 
 -(void) dealloc {
