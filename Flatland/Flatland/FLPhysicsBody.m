@@ -15,6 +15,20 @@ typedef void (*cpCollisionPostSolveFunc)(cpArbiter *arb, cpSpace *space, void *d
 typedef void (*cpCollisionSeparateFunc)(cpArbiter *arb, cpSpace *space, void *data)
 */
 
+//typedef void (*cpBodyShapeIteratorFunc)(cpBody *body, cpShape *shape, void *data)
+static void removeBodyShape(cpBody* body, cpShape* shape, void* data) {
+    cpSpaceRemoveShape(cpBodyGetSpace(body), shape);
+    cpShapeDestroy(shape);
+}
+
+//typedef void (*cpPostStepFunc)(cpSpace *space, void *obj, void *data)
+static void deferredRemoveBody(cpSpace* space, void* obj, void* data) {
+    cpBody* body = (cpBody*) obj;
+    cpBodyEachShape(body, removeBodyShape, nil);
+    cpSpaceRemoveBody(space, body);
+    cpBodyDestroy(body);
+}
+
 static int defaultBodyCollisionBeginFunc(cpArbiter* arb, cpSpace* space, void* data) {
     cpBody* bodyA;
     cpBody* bodyB;
@@ -82,8 +96,8 @@ static void defaultBodyCollisionSeparateFunc(cpArbiter* arb, cpSpace* space, voi
 
 -(void) dealloc {
     if (_body) {
-        cpSpaceRemoveBody(_space, _body);
-        cpBodyDestroy(_body);
+        cpBodySetUserData(_body, nil);
+        cpSpaceAddPostStepCallback(_space, deferredRemoveBody, _body, nil);
         _body = nil;
     }
     [super dealloc];
@@ -108,6 +122,15 @@ static void defaultBodyCollisionSeparateFunc(cpArbiter* arb, cpSpace* space, voi
 
 -(void) resetForces {
     cpBodyApplyForce(_body, cpvneg(cpBodyGetForce(_body)), CGPointZero);
+}
+
+-(void)forceTowards:(CGPoint)position {
+    CGPoint diff = ccpSub(position, self.position);
+    
+    [self resetForces];
+    [self applyForce:cpv(diff.x*5, diff.y*5) at:CGPointZero];
+    
+    self.rotation = atan2f(diff.x, -diff.y) - M_PI_2;
 }
 
 -(void) collisionBegin:(FLPhysicsBody *)otherBody {

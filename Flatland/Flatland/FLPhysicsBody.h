@@ -22,6 +22,8 @@
 -(void) applyImpulse: (cpVect) impulse at: (cpVect) offset;
 -(cpVect) resultant;
 
+-(void)forceTowards:(CGPoint)position;
+
 -(cpVect) rotationVector;
 
 

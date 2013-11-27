@@ -8,6 +8,8 @@
 
 #import "FLPlayer.h"
 
+#define PROJECTILE_SPEED 100.0f
+
 @interface FLPlayer()
 @property (nonatomic, strong) id<FLGame> game;
 @end
@@ -26,9 +28,9 @@
 }
 
 -(FLProjectile*) fireProjectile {
-    FLProjectile* projectile = [[FLProjectile alloc] initWithGame:_game space:self.space andPosition:ccpAdd(self.position,ccpMult(self.rotationVector, self.circleRadius))];
-    
-    return nil;
+    FLProjectile* projectile = [FLProjectile projectileWithGame:_game space:self.space andPosition:ccpAdd(self.position,ccpMult(self.rotationVector, self.circleRadius+4.0f))];
+    [projectile applyImpulse:ccpMult(self.rotationVector, PROJECTILE_SPEED) at: CGPointZero];
+    return projectile;
 }
 
 -(void) collisionBegin:(FLPhysicsBody *)otherBody {

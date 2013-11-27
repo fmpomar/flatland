@@ -23,7 +23,7 @@
 -(id) initWithGame:(id<FLGame>)game space:(cpSpace *)space andPosition:(CGPoint)position {
     self = [super initWithSpace:space Position:position R:2.0f M:0.1f I:INFINITY color:ccc4f(0.0f, 0.0f, 0.0f, 1.0f) andDrawDirection:NO];
     self.game = game;
-    [self schedule:@selector(scheduledExpiration) interval:2.0f];
+    [self schedule:@selector(scheduledExpiration) interval:1.0f];
     return self;
 }
 
@@ -37,6 +37,7 @@
 
 -(void)dealloc {
     self.game = nil;
+    NSLog(@"Destroying projectile");
     [super dealloc];
 }
 

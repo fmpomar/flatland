@@ -53,11 +53,8 @@
 }
 
 -(void) dealloc {
-    if (_shape) {
-        cpSpaceRemoveShape(self.space, _shape);
-        cpShapeDestroy(_shape);
+    if (_shape)
         _shape = nil;
-    }
     [super dealloc];
 }
 

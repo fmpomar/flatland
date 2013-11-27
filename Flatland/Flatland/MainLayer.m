@@ -88,7 +88,6 @@
 
 -(void) enemyExpired:(FLEnemy *)enemy {
     [self removeChild:enemy];
-    NSLog(@"rc:%d",[_pathFinding retainCount]);
 }
 
 -(void) projectileExpired:(FLProjectile *)projectile {
@@ -158,49 +157,23 @@
     touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
     touchLocation = [self convertToNodeSpace:touchLocation];
     
-    CGPoint playerPos = _player.position;
-    CGPoint diff = ccpSub(touchLocation, playerPos);
-
-    [_player resetForces];
-    [_player applyForce:cpv(diff.x*5, diff.y*5) at:CGPointZero];
-    //cpBodySetAngle(_player.body, atan2f(diff.x, -diff.y) - M_PI_2);
-    _player.rotation = atan2f(diff.x, -diff.y) - M_PI_2;
+    [_player forceTowards:touchLocation];
+    [self addChild:[_player fireProjectile]];
+    
 	return YES;
 }
 
 -(void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
-    [self ccTouchBegan:touch withEvent:event];
+    CGPoint touchLocation = [touch locationInView:touch.view];
+    touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+    touchLocation = [self convertToNodeSpace:touchLocation];
+    
+    [_player forceTowards:touchLocation];
 }
 
 -(void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     [_player resetForces];
-    /*
-    if ( abs(diff.x) > abs(diff.y) ) {
-        if (diff.x > 0) {
-            playerPos.x += _tileMap.tileSize.width;
-        } else {
-            playerPos.x -= _tileMap.tileSize.width;
-        }
-    } else {
-        if (diff.y > 0) {
-            playerPos.y += _tileMap.tileSize.height;
-        } else {
-            playerPos.y -= _tileMap.tileSize.height;
-        }
-    }
-    
-    CCLOG(@"playerPos %@",CGPointCreateDictionaryRepresentation(playerPos));
-    
-    // safety check on the bounds of the map
-    if (playerPos.x <= (_tileMap.mapSize.width * _tileMap.tileSize.width) &&
-        playerPos.y <= (_tileMap.mapSize.height * _tileMap.tileSize.height) &&
-        playerPos.y >= 0 &&
-        playerPos.x >= 0 )
-    {
-        [self setPlayerPosition:playerPos];
-    }
-    */
 
 }
 
