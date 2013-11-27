@@ -10,4 +10,5 @@
 
 @interface FLPhysicsCircle : FLPhysicsBody
 -(id) initWithSpace: (cpSpace*) space Position: (cpVect) position R: (float) radius M: (float) mass I: (float) momentOfInertia color: (ccColor4F) color andDrawDirection: (BOOL) drawDirection;
+-(float) circleRadius;
 @end

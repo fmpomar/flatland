@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D5D580141845AA9800166A80 /* FLPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D580131845AA9700166A80 /* FLPlayer.m */; };
+		D5D580181845B5EF00166A80 /* FLProjectile.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D580171845B5EE00166A80 /* FLProjectile.m */; };
 		D5DF4DBA184294FB00CE6370 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DB9184294FB00CE6370 /* QuartzCore.framework */; };
 		D5DF4DBC184294FB00CE6370 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DBB184294FB00CE6370 /* OpenGLES.framework */; };
 		D5DF4DBE184294FB00CE6370 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DBD184294FB00CE6370 /* OpenAL.framework */; };
@@ -189,6 +191,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D5D580121845AA9700166A80 /* FLPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLPlayer.h; sourceTree = "<group>"; };
+		D5D580131845AA9700166A80 /* FLPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLPlayer.m; sourceTree = "<group>"; };
+		D5D580151845AF8600166A80 /* FLGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLGame.h; sourceTree = "<group>"; };
+		D5D580161845B5EE00166A80 /* FLProjectile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLProjectile.h; sourceTree = "<group>"; };
+		D5D580171845B5EE00166A80 /* FLProjectile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLProjectile.m; sourceTree = "<group>"; };
 		D5DF4DB6184294FB00CE6370 /* Flatland.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flatland.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DF4DB9184294FB00CE6370 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D5DF4DBB184294FB00CE6370 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -613,8 +620,13 @@
 				D5DF52CD18429AB000CE6370 /* MainLayer.m */,
 				D5DF52F618444B3200CE6370 /* FLEnemy.h */,
 				D5DF52F718444B3300CE6370 /* FLEnemy.m */,
+				D5D580151845AF8600166A80 /* FLGame.h */,
 				D5DF52F318443E8000CE6370 /* FLPhysicsBody.h */,
 				D5DF52F418443E8000CE6370 /* FLPhysicsBody.m */,
+				D5D580121845AA9700166A80 /* FLPlayer.h */,
+				D5D580131845AA9700166A80 /* FLPlayer.m */,
+				D5D580161845B5EE00166A80 /* FLProjectile.h */,
+				D5D580171845B5EE00166A80 /* FLProjectile.m */,
 				D5DF52F018443DC900CE6370 /* FLPhysicsCircle.h */,
 				D5DF52F118443DCC00CE6370 /* FLPhysicsCircle.m */,
 				D5DF52E0184306CB00CE6370 /* FLTiledMap.h */,
@@ -1366,6 +1378,8 @@
 				D5DF52F218443DD000CE6370 /* FLPhysicsCircle.m in Sources */,
 				D5DF52F518443E8100CE6370 /* FLPhysicsBody.m in Sources */,
 				D5DF52F818444B3400CE6370 /* FLEnemy.m in Sources */,
+				D5D580141845AA9800166A80 /* FLPlayer.m in Sources */,
+				D5D580181845B5EF00166A80 /* FLProjectile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

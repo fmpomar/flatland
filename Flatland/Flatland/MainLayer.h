@@ -3,12 +3,14 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 
+#import "FLPlayer.h"
+
 @interface HudLayer : CCLayer
 - (void)numCollectedChanged:(int)numCollected;
 @end
 
 // MainLayer
-@interface MainLayer : CCLayer
+@interface MainLayer : CCLayer <FLGame>
 {
     cpSpace *_space;
     NSPointerArray* _blockShapes;

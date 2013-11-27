@@ -126,4 +126,9 @@
     
 }
 
+-(void)dealloc {
+    self.metaLayer = nil;
+    [super dealloc];
+}
+
 @end

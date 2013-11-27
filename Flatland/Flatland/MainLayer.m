@@ -8,6 +8,7 @@
 #import "FLPhysicsCircle.h"
 
 #import "FLEnemy.h"
+#import "FLPlayer.h"
 
 @implementation HudLayer
 {
@@ -37,12 +38,11 @@
 @interface MainLayer()
 
 @property (strong) FLTiledMap *tileMap;
-@property (strong) FLPhysicsBody *player;
+@property (strong) FLPlayer *player;
 @property (strong) CCTMXLayer *meta;
 @property (strong) HudLayer *hud;
 @property (assign) int numCollected;
-
-@property (strong) FLEnemy* testEnemy;
+@property (strong) FLPathFinding* pathFinding;
 
 @end
 
@@ -78,49 +78,23 @@
     
 }
 
--(void) setupPlayerAtPosition:(CGPoint)position
-{
-	// physics body
-	/*int num = 4;
-	cpVect verts[] = {
-		cpv(-24,-54),
-		cpv(-24, 54),
-		cpv( 24, 54),
-		cpv( 24,-54),
-	};*/
-    
-    self.player = [[FLPhysicsCircle alloc] initWithSpace:_space Position:position R:16.0f M:0.5f I:INFINITY color:ccc4f(0.0f, 0.0f, 1.0f, 1.0f) andDrawDirection:YES];
-    
-    [self addChild:_player];
-    _player.visible = YES;
-    /*
-    return;
-	
-    cpBody* body = cpBodyNew(1.0f, INFINITY);
-	cpBodySetPos( body, position );
-	cpSpaceAddBody(_space, body);
-	*/
-	/*cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
-	cpShapeSetElasticity( shape, 0.5f );
-	cpShapeSetFriction( shape, 0.5f );
-	cpSpaceAddShape(_space, shape);*/
-    /*
-    cpShape* shape = cpCircleShapeNew(body, 16.0f, CGPointZero);
-    cpShapeSetElasticity( shape, 0.5f );
-	cpShapeSetFriction( shape, 0.5f );
-    cpSpaceAddShape(_space, shape);
-	
-    CCPhysicsSprite* sprite = [CCPhysicsSprite spriteWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"Player.png"]];
-
-	[sprite setCPBody:body];
-	[sprite setPosition: position];
-    
-    _player = sprite;
-    [self addChild:_player];
-    [self setViewPointCenter:_player.position];
-    */
-    
+-(FLPlayer*) getPlayer {
+    return _player;
 }
+
+-(void) endGame {
+    NSLog(@"Game actually ended.");
+}
+
+-(void) enemyExpired:(FLEnemy *)enemy {
+    [self removeChild:enemy];
+    NSLog(@"rc:%d",[_pathFinding retainCount]);
+}
+
+-(void) projectileExpired:(FLProjectile *)projectile {
+    [self removeChild:projectile];
+}
+
 
 -(id) init
 {
@@ -133,19 +107,21 @@
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
         
-        
-        
         self.touchEnabled = YES;
         [self initPhysics];
+        [FLPhysicsBody setupSpaceForCollisions:_space];
         
         self.tileMap = [FLTiledMap tiledMapWithTMXFile:@"2d.tmx" andSpace: _space];
         
         [self addChild:_tileMap z:-1];
-        [self setupPlayerAtPosition:[_tileMap playerSpawnPoint]];
+        self.player = [FLPlayer playerWithGame:self space:_space andPosition:[_tileMap playerSpawnPoint]];
+
+        [self addChild:_player];
         
-        self.testEnemy = [[FLEnemy alloc] initWithPlayer:_player pathFinding: [[FLPathFinding alloc] initWithMap:_tileMap] space:_space andPosition:ccp(_player.position.x + 32*10,_player.position.y)];
+        self.pathFinding = [FLPathFinding pathFindingWithMap:_tileMap];
         
-        [self addChild:_testEnemy];
+        [self addChild:[FLEnemy enemyWithGame:self pathFinding:_pathFinding space:_space andPosition:ccp(_player.position.x+32*10,_player.position.y)]];
+        
         
         [self scheduleUpdate];
     }

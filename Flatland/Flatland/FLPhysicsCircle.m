@@ -37,6 +37,10 @@
     
 }
 
+-(float) circleRadius {
+    return cpCircleShapeGetRadius(_shape);
+}
+
 -(void) draw {
     cpVect center = ((cpCircleShape*)_shape)->tc; //cpCircleShapeGetOffset(_shape);
     cpFloat radius = cpCircleShapeGetRadius(_shape);
@@ -46,6 +50,15 @@
         [self drawSegmentFrom:center to:cpvadd(center, cpvmult(cpBodyGetRot(self.body), radius)) radius:1.0 color:ccc4f(0.0f, 0.0f, 0.0f, 1.0f)];
     [super draw];
 	[super clear];
+}
+
+-(void) dealloc {
+    if (_shape) {
+        cpSpaceRemoveShape(self.space, _shape);
+        cpShapeDestroy(_shape);
+        _shape = nil;
+    }
+    [super dealloc];
 }
 
 @end

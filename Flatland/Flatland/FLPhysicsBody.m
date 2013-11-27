@@ -8,7 +8,48 @@
 
 #import "FLPhysicsBody.h"
 
+/*
+typedef int (*cpCollisionBeginFunc)(cpArbiter *arb, struct cpSpace *space, void *data)
+typedef int (*cpCollisionPreSolveFunc)(cpArbiter *arb, cpSpace *space, void *data)
+typedef void (*cpCollisionPostSolveFunc)(cpArbiter *arb, cpSpace *space, void *data)
+typedef void (*cpCollisionSeparateFunc)(cpArbiter *arb, cpSpace *space, void *data)
+*/
+
+static int defaultBodyCollisionBeginFunc(cpArbiter* arb, cpSpace* space, void* data) {
+    cpBody* bodyA;
+    cpBody* bodyB;
+    FLPhysicsBody* flBodyA;
+    FLPhysicsBody* flBodyB;
+    cpArbiterGetBodies(arb, &bodyA, &bodyB);
+    flBodyA = (FLPhysicsBody*) cpBodyGetUserData(bodyA);
+    flBodyB = (FLPhysicsBody*) cpBodyGetUserData(bodyB);
+    if (flBodyA && flBodyB) {
+        [flBodyA collisionBegin:flBodyB];
+        [flBodyB collisionBegin:flBodyA];
+    }
+    return true;
+}
+
+static void defaultBodyCollisionSeparateFunc(cpArbiter* arb, cpSpace* space, void* data) {
+    cpBody* bodyA;
+    cpBody* bodyB;
+    FLPhysicsBody* flBodyA;
+    FLPhysicsBody* flBodyB;
+    cpArbiterGetBodies(arb, &bodyA, &bodyB);
+    flBodyA = (FLPhysicsBody*) cpBodyGetUserData(bodyA);
+    flBodyB = (FLPhysicsBody*) cpBodyGetUserData(bodyB);
+    if (flBodyA && flBodyB) {
+        [flBodyA collisionSeparate:flBodyB];
+        [flBodyB collisionSeparate:flBodyA];
+    }
+}
+
 @implementation FLPhysicsBody
+
++(void) setupSpaceForCollisions:(cpSpace *)space {
+    cpSpaceSetDefaultCollisionHandler(space, defaultBodyCollisionBeginFunc, nil, nil, defaultBodyCollisionSeparateFunc, nil);
+}
+
 
 -(CGPoint) position {
     cpVect vpos = cpBodyGetPos(_body);
@@ -34,8 +75,18 @@
     _space = space;
     _body = cpBodyNew(mass, momentOfInertia);
 	cpBodySetPos(_body, position);
+    cpBodySetUserData(_body, self);
 	cpSpaceAddBody(_space, _body);
     return self;
+}
+
+-(void) dealloc {
+    if (_body) {
+        cpSpaceRemoveBody(_space, _body);
+        cpBodyDestroy(_body);
+        _body = nil;
+    }
+    [super dealloc];
 }
 
 
@@ -51,10 +102,20 @@
     return cpBodyGetForce(_body);
 }
 
+-(cpVect) rotationVector {
+    return cpBodyGetRot(_body);
+}
+
 -(void) resetForces {
     cpBodyApplyForce(_body, cpvneg(cpBodyGetForce(_body)), CGPointZero);
 }
 
+-(void) collisionBegin:(FLPhysicsBody *)otherBody {
+    // Do nothing.
+}
 
+-(void) collisionSeparate:(FLPhysicsBody *)otherBody {
+    // Do nothing.
+}
 
 @end

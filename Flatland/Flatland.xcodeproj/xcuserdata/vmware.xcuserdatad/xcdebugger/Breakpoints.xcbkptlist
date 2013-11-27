@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/MainLayer.m"
-         timestampString = "407131699.548926"
+         timestampString = "407225712.719259"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "129"
-         endingLineNumber = "129"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
          landmarkName = "-init"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407139809.527263"
+         timestampString = "407228292.453389"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
+         startingLineNumber = "148"
+         endingLineNumber = "148"
          landmarkName = "-getNode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407139809.527263"
+         timestampString = "407228292.453389"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "120"
-         endingLineNumber = "120"
+         startingLineNumber = "153"
+         endingLineNumber = "153"
          landmarkName = "-setNode:at:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLPathFinding.m"
-         timestampString = "407139809.527263"
+         timestampString = "407228292.453389"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
          landmarkName = "-hasNext"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,12 +60,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/FLEnemy.m"
-         timestampString = "407141558.901628"
+         timestampString = "407225321.853525"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "-calculatePathToPlayer"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Flatland/FLPlayer.m"
+         timestampString = "407226408.8665"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "29"
+         endingLineNumber = "29"
+         landmarkName = "-fireProjectile"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

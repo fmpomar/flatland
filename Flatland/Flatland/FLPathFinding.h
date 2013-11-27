@@ -17,6 +17,7 @@
 @property (nonatomic,strong,readonly) NSMutableArray* edges;
 @property (nonatomic,assign,readonly) CGPoint position;
 
++(id) nodeWithPosition: (CGPoint) position;
 -(id) initWithPosition: (CGPoint) position;
 -(void) addNeighbour:(FLPathFindingNode *)neighbour withCost: (float) cost;
 
@@ -30,11 +31,13 @@
 @property (nonatomic,readonly,assign) float cost;
 @property (nonatomic,readonly,strong) FLPathFindingNode* target;
 
++(id) edgeWithTarget: (FLPathFindingNode*) target andCost: (float) cost;
 -(id) initWithTarget: (FLPathFindingNode*) target andCost: (float) cost;
 
 @end
 
 @interface FLPath : NSObject
++(id) pathWithDestination: (FLPathFindingNode*) destNode andMap: (FLTiledMap*) map;
 -(id) initWithDestination: (FLPathFindingNode*) destNode andMap: (FLTiledMap*) map;
 -(CGPoint) next;
 -(BOOL) hasNext;
@@ -44,6 +47,7 @@
 
 @property (nonatomic,strong,readonly) FLTiledMap* map;
 
++(id) pathFindingWithMap: (FLTiledMap*) map;
 -(id) initWithMap: (FLTiledMap*) map;
 -(FLPath*) pathFrom: (cpVect) origin To: (cpVect) destination;
 @end

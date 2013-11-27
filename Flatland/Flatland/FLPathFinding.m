@@ -10,6 +10,10 @@
 
 @implementation FLPathFindingNode
 
++(id) nodeWithPosition:(CGPoint)position {
+    return [[[self alloc] initWithPosition:position] autorelease];
+}
+
 -(id) initWithPosition:(CGPoint)position {
     _position = position;
     _edges = [[NSMutableArray array] retain];
@@ -19,7 +23,7 @@
 
 -(void) addNeighbour:(FLPathFindingNode *)neighbour withCost: (float) cost {
     if (neighbour)
-        [_edges addObject:[[FLPathFindingEdge alloc] initWithTarget:neighbour andCost:cost]];
+        [_edges addObject:[FLPathFindingEdge edgeWithTarget:neighbour andCost:cost]];
 }
 
 -(void) reset {
@@ -32,14 +36,31 @@
     _visited = YES;
 }
 
+-(void)dealloc {
+    self.parent = nil;
+    [_edges release];
+    _edges = nil;
+    [super dealloc];
+}
+
 @end
 
 @implementation FLPathFindingEdge
+
++(id) edgeWithTarget:(FLPathFindingNode *)target andCost:(float)cost {
+    return [[[self alloc] initWithTarget: target andCost: cost] autorelease];
+}
 
 -(id) initWithTarget: (FLPathFindingNode*) target andCost: (float) cost {
     _cost = cost;
     _target = [target retain];
     return self;
+}
+
+-(void)dealloc {
+    [_target release];
+    _target = nil;
+    [super dealloc];
 }
 
 @end
@@ -55,6 +76,10 @@
 
 @implementation FLPath
 
++(id) pathWithDestination:(FLPathFindingNode *)destNode andMap:(FLTiledMap *)map {
+    return [[[self alloc] initWithDestination: destNode andMap: map] autorelease];
+}
+
 -(id) initWithDestination:(FLPathFindingNode *)destNode andMap: (FLTiledMap*) map {
     FLPathFindingNode* current = destNode;
     self.nodes = [NSMutableArray array];
@@ -64,7 +89,7 @@
     }
     self.enumer = [_nodes reverseObjectEnumerator];
     self.map = map;
-    _savedNode = nil;
+    self.savedNode = nil;
     return self;
 }
 
@@ -72,7 +97,7 @@
     FLPathFindingNode* nextNode;
     if ([self hasNext]) {
         nextNode = _savedNode;
-        _savedNode = nil;
+        self.savedNode = nil;
         return [_map mapToWorldCoords:nextNode.position];
     } else {
         return CGPointZero;
@@ -81,8 +106,16 @@
 
 -(BOOL) hasNext {
     if (_savedNode) return YES;
-    _savedNode = [_enumer nextObject];
+    self.savedNode = [_enumer nextObject];
     return (_savedNode != nil);
+}
+
+-(void) dealloc {
+    self.nodes = nil;
+    self.enumer = nil;
+    self.map = nil;
+    self.savedNode = nil;
+    [super dealloc];
 }
 
 @end
@@ -101,9 +134,9 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
 
 @interface FLPathFinding()
 
+@property (nonatomic, strong) FLTiledMap* map;
 @property (nonatomic, assign) FLPathFindingNode** nodes;
 @property (nonatomic, assign) int nodesSize;
-@property (nonatomic, strong) FLTiledMap* map;
 @property (nonatomic, assign) CGSize dims;
 
 @end
@@ -179,6 +212,10 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
     
 }
 
++(id) pathFindingWithMap:(FLTiledMap *)map {
+    return [[[self alloc] initWithMap: map] autorelease];
+}
+
 -(id) initWithMap:(FLTiledMap *)map {
     int x, y;
     self.nodesSize = map.mapSize.height*map.mapSize.width;
@@ -192,7 +229,7 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
             if ([_map tileBlocked:ccp(x,y)]) {
                 [self setNode:nil at:ccp(x,y)];
             } else {
-                [self setNode:[[FLPathFindingNode alloc] initWithPosition:ccp(x,y)] at:ccp(x,y)];
+                [self setNode:[FLPathFindingNode nodeWithPosition:ccp(x,y)] at:ccp(x,y)];
             }
         }
     }
@@ -223,9 +260,18 @@ static FLPathFindingNode* getLowestNode(NSMutableOrderedSet* set) {
             }
         }
     }
-    
-    
-    
     return self;
 }
+
+-(void) dealloc {
+    for (int i = 0; i < _nodesSize; i++) {
+        if (_nodes[i])
+            [_nodes[i] release];
+    }
+    free(_nodes);
+    self.map = nil;
+    NSLog(@"pathfinding released");
+    [super dealloc];
+}
+
 @end

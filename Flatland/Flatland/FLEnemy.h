@@ -8,9 +8,13 @@
 
 #import "FLPhysicsCircle.h"
 #import "FLPathFinding.h"
+#import "FLPlayer.h"
+#import "FLGame.h"
+
 
 @interface FLEnemy : FLPhysicsCircle
 
--(id) initWithPlayer: (FLPhysicsBody*) player pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position;
++(id) enemyWithGame: (id<FLGame>) game pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position;
+-(id) initWithGame: (id<FLGame>) game pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position;
 
 @end

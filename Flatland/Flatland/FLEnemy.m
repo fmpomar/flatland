@@ -11,14 +11,15 @@
 #define SPEED_MULTIPLIER 5.0f
 #define WANDER_SPEED_MULTIPLIER 1.0f
 #define WANDER_DISTANCE 80.0f
-#define DETECTION_DISTANCE 160.0f
+#define DETECTION_DISTANCE (32.0f*7.0f)
 #define CLOSE_ENOUGH_DISTANCE 16.0f
 
 @interface FLEnemy()
 
 @property (strong, nonatomic) FLPathFinding* pathFinding;
 @property (strong, nonatomic) FLPath* path;
-@property (strong, nonatomic) FLPhysicsBody* player;
+@property (strong, nonatomic) id<FLGame> game;
+@property (strong, nonatomic) FLPlayer* player;
 @property (nonatomic, assign) CGPoint headingPosition;
 @property (nonatomic, assign) CGPoint lastPlayerPos;
 @property (nonatomic, assign) BOOL moving;
@@ -27,10 +28,15 @@
 
 @implementation FLEnemy
 
--(id) initWithPlayer: (FLPhysicsBody*) player pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position {
++(id) enemyWithGame:(id<FLGame>)game pathFinding:(FLPathFinding *)pathFinding space:(cpSpace *)space andPosition:(CGPoint)position {
+    return [[[self alloc] initWithGame:game pathFinding:pathFinding space:space andPosition:position] autorelease];
+}
+
+-(id) initWithGame: (id<FLGame>) game pathFinding: (FLPathFinding*) pathFinding space: (cpSpace*) space andPosition: (CGPoint) position {
     self = [super initWithSpace:space Position:position R:15.0f M:0.5f I:INFINITY color:ccc4f(0.8f, 0.0f, 0.0f, 1.0f) andDrawDirection:YES];
     self.pathFinding = pathFinding;
-    self.player = player;
+    self.game = game;
+    self.player = [game getPlayer];
     self.path = nil;
     self.moving = YES;
     [self scheduleUpdate];
@@ -58,7 +64,6 @@
 
 -(void) update:(ccTime)delta {
     if (!_moving) return;
-    
     [self updatePlayerPosition];
     [self resetForces];
     
@@ -85,6 +90,18 @@
     CGPoint diff = ccpSub(wanderPoint, self.position);
     self.rotation = atan2f(diff.x, -diff.y) - M_PI_2;
     [self applyImpulse:ccpMult(diff, WANDER_SPEED_MULTIPLIER) at: CGPointZero];
+}
+
+-(void) collisionBegin:(FLPhysicsBody *)otherBody {
+    [_game enemyExpired:self];
+}
+
+-(void) dealloc {
+    self.pathFinding = nil;
+    self.path = nil;
+    self.game = nil;
+    self.player = nil;
+    [super dealloc];
 }
 
 @end
