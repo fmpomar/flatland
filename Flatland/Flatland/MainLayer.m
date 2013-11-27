@@ -10,39 +10,17 @@
 #import "FLEnemy.h"
 #import "FLPlayer.h"
 
-@implementation HudLayer
-{
-    CCLabelTTF *_label;
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
-        _label = [CCLabelTTF labelWithString:@"0" fontName:@"Verdana-Bold" fontSize:18.0];
-        _label.color = ccc3(0,0,0);
-        int margin = 10;
-        _label.position = ccp(winSize.width - (_label.contentSize.width/2) - margin, _label.contentSize.height/2 + margin);
-        [self addChild:_label];
-    }
-    return self;
-}
-
--(void)numCollectedChanged:(int)numCollected
-{
-    _label.string = [NSString stringWithFormat:@"%d",numCollected];
-}
-@end
+#import "HudLayer.h"
 
 @interface MainLayer()
 
 @property (strong) FLTiledMap *tileMap;
 @property (strong) FLPlayer *player;
 @property (strong) CCTMXLayer *meta;
-@property (strong) HudLayer *hud;
 @property (assign) int numCollected;
 @property (strong) FLPathFinding* pathFinding;
+@property (assign) cpSpace* space;
+@property (strong) HudLayer* hud;
 
 @end
 
@@ -60,9 +38,9 @@
 	// add layer as a child to scene
 	[scene addChild: layer];
     
-    HudLayer *hud = [HudLayer node];
-    [scene addChild:hud];
+    HudLayer* hud = [HudLayer node];
     layer.hud = hud;
+    [scene addChild: hud];
     
 	// return the scene
 	return scene;
@@ -74,19 +52,32 @@
 	//[self addChild:[CCPhysicsDebugNode debugNodeForCPSpace:_space] z:100];
 }
 
--(void) setupRandomObstacles {
-    
-}
-
 -(FLPlayer*) getPlayer {
     return _player;
 }
 
 -(void) endGame {
     self.player.position = [_tileMap playerSpawnPoint];
+    [_hud displayMessage:@"PWN3D" withColor:ccc3(168, 0, 0)];
 }
 
 -(void) enemyExpired:(FLEnemy *)enemy {
+    CCParticleSystem* particleSystem = [[CCParticleExplosion alloc] initWithTotalParticles:100];   
+    
+    [particleSystem setLife: 0.35];
+    [particleSystem setLifeVar: 0.025];
+    [particleSystem setSpeed: 280.0];
+    [particleSystem setTexture: [[CCTextureCache sharedTextureCache] addImage:@"triangle.png" ] ];
+    
+    [particleSystem setStartColor:ccc4f(0.8f, 0.0f, 0.0f, 1.0f)];
+    [particleSystem setEndColor: ccc4f(0.8f, 0.0f, 0.0f, 0.0f)];
+    [particleSystem setStartColorVar:ccc4f(0.1f, 0.0f, 0.0f, 0.0f)];
+    [particleSystem setEndColorVar:ccc4f(0.1f, 0.0f, 0.0f, 0.0f)];
+    
+    particleSystem.position = enemy.position;
+    
+    [self addChild:particleSystem];
+    
     [self removeChild:enemy];
 }
 
@@ -94,17 +85,18 @@
     [self removeChild:projectile];
 }
 
-
 -(id) init
 {
     
 	if( (self=[super init]) ) {
         
         // At top of init for MainLayer
+        /*
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"pickup.caf"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"hit.caf"];
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"move.caf"];
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
+         */
         
         self.touchEnabled = YES;
         [self initPhysics];

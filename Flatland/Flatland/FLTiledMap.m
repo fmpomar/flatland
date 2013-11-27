@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) cpSpace* space;
 @property (nonatomic, strong) CCTMXLayer* metaLayer;
+@property (nonatomic, strong) NSMutableArray* spawnPoints;
 
 @end
 
@@ -38,6 +39,13 @@
     
     
     return ccp([spawnPoint[@"x"] integerValue],[spawnPoint[@"y"] integerValue]);
+}
+
+-(CGPoint) randomSpawnPoint {
+    CGPoint point = ccp(0,0);
+    if (_spawnPoints && [_spawnPoints count] > 0)
+        [_spawnPoints[arc4random()%[_spawnPoints count]] getValue: &point];
+    return point;
 }
 
 -(Boolean) tileInBounds: (CGPoint) tileCoord {
@@ -89,6 +97,20 @@
     }
 }
 
+-(void) gatherSpawnPoint: (CGPoint) tileCoord {
+    if (![self tileInBounds:tileCoord]) return;
+    int tileGid = [_metaLayer tileGIDAt: tileCoord];
+    if (tileGid) {
+        NSDictionary *properties = [self propertiesForGID:tileGid];
+        if (properties) {
+            NSString *spawnPoint = properties[@"SpawnPoint"];
+            if (spawnPoint && [spawnPoint isEqualToString:@"True"]) {
+                [_spawnPoints addObject:[NSValue valueWithBytes:&tileCoord objCType:@encode(CGPoint)]];
+            }
+        }
+    }
+}
+
 -(void) initWalls {
     int x,y;
     CGSize mapSize = [self mapSize];
@@ -97,9 +119,13 @@
     pixelMapSize.height *= self.tileSize.height;
     cpShape* mapBorder;
     
+    self.spawnPoints = [NSMutableArray array];
+    
     for (x=0; x<mapSize.width; x++)
-        for (y=0; y<mapSize.height; y++)
+        for (y=0; y<mapSize.height; y++) {
             [self createWallAtTile:ccp(x,y)];
+            [self gatherSpawnPoint:ccp(x,y)];
+        }
     
     mapBorder = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(pixelMapSize.width,0), 0.0f);
 	cpShapeSetElasticity(mapBorder, 1.0f);
@@ -128,6 +154,7 @@
 
 -(void)dealloc {
     self.metaLayer = nil;
+    self.spawnPoints = nil;
     [super dealloc];
 }
 

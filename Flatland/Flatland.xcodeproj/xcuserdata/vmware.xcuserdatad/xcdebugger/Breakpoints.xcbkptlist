@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Flatland/MainLayer.m"
-         timestampString = "407229685.987775"
+         timestampString = "407235670.042673"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "102"
-         endingLineNumber = "102"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
          landmarkName = "-init"
          landmarkType = "5">
       </FileBreakpoint>
@@ -79,6 +79,19 @@
          startingLineNumber = "32"
          endingLineNumber = "32"
          landmarkName = "-fireProjectile"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Flatland/FLTiledMap.m"
+         timestampString = "407237646.588975"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
+         landmarkName = "-gatherSpawnPoint:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

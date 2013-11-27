@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D5D580141845AA9800166A80 /* FLPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D580131845AA9700166A80 /* FLPlayer.m */; };
 		D5D580181845B5EF00166A80 /* FLProjectile.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D580171845B5EE00166A80 /* FLProjectile.m */; };
+		D5D8AC211845E2C0009F782B /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = D5D8AC201845E2C0009F782B /* triangle.png */; };
+		D5D8AC241845E846009F782B /* HudLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5D8AC231845E845009F782B /* HudLayer.m */; };
 		D5DF4DBA184294FB00CE6370 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DB9184294FB00CE6370 /* QuartzCore.framework */; };
 		D5DF4DBC184294FB00CE6370 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DBB184294FB00CE6370 /* OpenGLES.framework */; };
 		D5DF4DBE184294FB00CE6370 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5DF4DBD184294FB00CE6370 /* OpenAL.framework */; };
@@ -170,7 +172,6 @@
 		D5DF4FB3184294FF00CE6370 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FB2184294FF00CE6370 /* cpVect.c */; };
 		D5DF4FB9184294FF00CE6370 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FB8184294FF00CE6370 /* main.m */; };
 		D5DF4FBC184294FF00CE6370 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FBB184294FF00CE6370 /* AppDelegate.m */; };
-		D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF4FC11842950000CE6370 /* IntroLayer.m */; };
 		D5DF4FC41842950000CE6370 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = D5DF4FC31842950000CE6370 /* grossini_dance_atlas.png */; };
 		D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D5DF52CD18429AB000CE6370 /* MainLayer.m */; };
 		D5DF52D818429BB600CE6370 /* hit.caf in Resources */ = {isa = PBXBuildFile; fileRef = D5DF52D018429BB600CE6370 /* hit.caf */; };
@@ -196,6 +197,9 @@
 		D5D580151845AF8600166A80 /* FLGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FLGame.h; sourceTree = "<group>"; };
 		D5D580161845B5EE00166A80 /* FLProjectile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLProjectile.h; sourceTree = "<group>"; };
 		D5D580171845B5EE00166A80 /* FLProjectile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLProjectile.m; sourceTree = "<group>"; };
+		D5D8AC201845E2C0009F782B /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle.png; sourceTree = "<group>"; };
+		D5D8AC221845E845009F782B /* HudLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudLayer.h; sourceTree = "<group>"; };
+		D5D8AC231845E845009F782B /* HudLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudLayer.m; sourceTree = "<group>"; };
 		D5DF4DB6184294FB00CE6370 /* Flatland.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flatland.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5DF4DB9184294FB00CE6370 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D5DF4DBB184294FB00CE6370 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -530,8 +534,6 @@
 		D5DF4FB8184294FF00CE6370 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D5DF4FBA184294FF00CE6370 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D5DF4FBB184294FF00CE6370 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D5DF4FC01842950000CE6370 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
-		D5DF4FC11842950000CE6370 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		D5DF4FC31842950000CE6370 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grossini_dance_atlas.png; path = Resources/grossini_dance_atlas.png; sourceTree = "<group>"; };
 		D5DF52CC18429AB000CE6370 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
 		D5DF52CD18429AB000CE6370 /* MainLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainLayer.m; sourceTree = "<group>"; };
@@ -618,6 +620,8 @@
 				D5DF52CF18429BB600CE6370 /* TileGameResources */,
 				D5DF52CC18429AB000CE6370 /* MainLayer.h */,
 				D5DF52CD18429AB000CE6370 /* MainLayer.m */,
+				D5D8AC221845E845009F782B /* HudLayer.h */,
+				D5D8AC231845E845009F782B /* HudLayer.m */,
 				D5DF52F618444B3200CE6370 /* FLEnemy.h */,
 				D5DF52F718444B3300CE6370 /* FLEnemy.m */,
 				D5D580151845AF8600166A80 /* FLGame.h */,
@@ -635,8 +639,6 @@
 				D5DF52EB1844048500CE6370 /* FLPathFinding.m */,
 				D5DF4FBA184294FF00CE6370 /* AppDelegate.h */,
 				D5DF4FBB184294FF00CE6370 /* AppDelegate.m */,
-				D5DF4FC01842950000CE6370 /* IntroLayer.h */,
-				D5DF4FC11842950000CE6370 /* IntroLayer.m */,
 				D5DF4DCE184294FB00CE6370 /* Resources */,
 				D5DF4DE6184294FB00CE6370 /* libs */,
 				D5DF4FB6184294FF00CE6370 /* Supporting Files */,
@@ -1134,6 +1136,7 @@
 		D5DF52CF18429BB600CE6370 /* TileGameResources */ = {
 			isa = PBXGroup;
 			children = (
+				D5D8AC201845E2C0009F782B /* triangle.png */,
 				D5DF52E618434A8D00CE6370 /* 2d.tmx */,
 				D5DF52E718434A8D00CE6370 /* tileset.png */,
 				D5DF52D018429BB600CE6370 /* hit.caf */,
@@ -1222,6 +1225,7 @@
 				D5DF52DF18429BB600CE6370 /* tmw_desert_spacing.png in Resources */,
 				D5DF52E818434A8D00CE6370 /* 2d.tmx in Resources */,
 				D5DF52E918434A8D00CE6370 /* tileset.png in Resources */,
+				D5D8AC211845E2C0009F782B /* triangle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1371,7 +1375,6 @@
 				D5DF4FB3184294FF00CE6370 /* cpVect.c in Sources */,
 				D5DF4FB9184294FF00CE6370 /* main.m in Sources */,
 				D5DF4FBC184294FF00CE6370 /* AppDelegate.m in Sources */,
-				D5DF4FC21842950000CE6370 /* IntroLayer.m in Sources */,
 				D5DF52CE18429AB000CE6370 /* MainLayer.m in Sources */,
 				D5DF52E2184306CC00CE6370 /* FLTiledMap.m in Sources */,
 				D5DF52EC1844048500CE6370 /* FLPathFinding.m in Sources */,
@@ -1380,6 +1383,7 @@
 				D5DF52F818444B3400CE6370 /* FLEnemy.m in Sources */,
 				D5D580141845AA9800166A80 /* FLPlayer.m in Sources */,
 				D5D580181845B5EF00166A80 /* FLProjectile.m in Sources */,
+				D5D8AC241845E846009F782B /* HudLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
