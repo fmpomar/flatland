@@ -21,6 +21,7 @@
 @property (strong) FLPathFinding* pathFinding;
 @property (assign) cpSpace* space;
 @property (strong) HudLayer* hud;
+@property (strong) NSMutableArray* enemies;
 
 @end
 
@@ -59,6 +60,10 @@
 -(void) endGame {
     self.player.position = [_tileMap playerSpawnPoint];
     [_hud displayMessage:@"PWN3D" withColor:ccc3(168, 0, 0)];
+    for (FLEnemy* enemy in [[_enemies copy] autorelease]) {
+        [_enemies removeObject:enemy];
+        [self removeChild:enemy];
+    }
 }
 
 -(void) enemyExpired:(FLEnemy *)enemy {
@@ -79,6 +84,7 @@
     [self addChild:particleSystem];
     
     [self removeChild:enemy];
+    [_enemies removeObject:enemy];
 }
 
 -(void) projectileExpired:(FLProjectile *)projectile {
@@ -98,6 +104,8 @@
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"TileMap.caf"];
          */
         
+        self.enemies = [NSMutableArray array];
+        
         self.touchEnabled = YES;
         [self initPhysics];
         [FLPhysicsBody setupSpaceForCollisions:_space];
@@ -110,8 +118,6 @@
         [self addChild:_player];
         
         self.pathFinding = [FLPathFinding pathFindingWithMap:_tileMap];
-        
-        [self addChild:[FLEnemy enemyWithGame:self pathFinding:_pathFinding space:_space andPosition:ccp(_player.position.x+32*10,_player.position.y)]];
         
         
         [self scheduleUpdate];
@@ -186,6 +192,14 @@
 	}
     
     [self setViewPointCenter:_player.position];
+    
+    //Randomly spawn enemy
+    if (arc4random()%4==0 && [_tileMap hasSpawnPoints] && [_enemies count] < 10) {
+        FLEnemy* enemy = [FLEnemy enemyWithGame:self pathFinding:_pathFinding space:_space andPosition:[_tileMap randomSpawnPoint]];
+        [_enemies addObject:enemy];
+        [self addChild:enemy];
+        NSLog(@"Enemy at: %f,%f", enemy.position.x, enemy.position.y);
+    }
 }
 
 

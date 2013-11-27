@@ -8,10 +8,10 @@
 
 #import "FLEnemy.h"
 
-#define SPEED_MULTIPLIER 5.0f
+#define SPEED_MULTIPLIER 6.0f
 #define WANDER_SPEED_MULTIPLIER 1.0f
 #define WANDER_DISTANCE 80.0f
-#define DETECTION_DISTANCE (32.0f*7.0f)
+#define DETECTION_DISTANCE (32.0f*12.0f)
 #define CLOSE_ENOUGH_DISTANCE 16.0f
 
 @interface FLEnemy()

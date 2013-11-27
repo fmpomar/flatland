@@ -21,4 +21,7 @@
 -(Boolean) tileBlocked: (CGPoint) tileCoord;
 -(Boolean) tileInBounds: (CGPoint) tileCoord;
 
+-(BOOL) hasSpawnPoints;
+-(CGPoint) randomSpawnPoint;
+
 @end

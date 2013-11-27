@@ -41,11 +41,15 @@
     return ccp([spawnPoint[@"x"] integerValue],[spawnPoint[@"y"] integerValue]);
 }
 
+-(BOOL) hasSpawnPoints {
+    return (_spawnPoints && [_spawnPoints count] > 0);
+}
+
 -(CGPoint) randomSpawnPoint {
     CGPoint point = ccp(0,0);
-    if (_spawnPoints && [_spawnPoints count] > 0)
+    if ([self hasSpawnPoints])
         [_spawnPoints[arc4random()%[_spawnPoints count]] getValue: &point];
-    return point;
+    return [self mapToWorldCoords:point];
 }
 
 -(Boolean) tileInBounds: (CGPoint) tileCoord {

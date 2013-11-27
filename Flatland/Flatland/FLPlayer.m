@@ -35,7 +35,6 @@
 }
 
 -(void) collisionBegin:(FLPhysicsBody *)otherBody {
-    NSLog(@"Game Lost!");
     if ([otherBody isKindOfClass:[FLEnemy class]])
         [_game endGame];
 }

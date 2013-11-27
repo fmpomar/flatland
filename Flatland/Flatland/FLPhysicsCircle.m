@@ -42,7 +42,7 @@
 }
 
 -(void) draw {
-    cpVect center = ((cpCircleShape*)_shape)->tc; //cpCircleShapeGetOffset(_shape);
+    cpVect center = ccpAdd(cpCircleShapeGetOffset(_shape),self.position);
     cpFloat radius = cpCircleShapeGetRadius(_shape);
     [self drawDot:center radius:cpfmax(radius, 1.0) color:ccc4f(0.0f, 0.0f, 0.0f, 1.0f)];
     [self drawDot:center radius:cpfmax(radius*0.9f, 1.0) color:_color];
